@@ -1,0 +1,1 @@
+create index IX_633F2D47 on PushNotifications_Device (userId);

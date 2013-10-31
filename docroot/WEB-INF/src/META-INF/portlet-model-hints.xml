@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.mobile.pushnotifications.model.Device">
+		<field name="deviceId" type="String" />
+		<field name="userId" type="long" />
+		<field name="applicationName" type="String" />
+		<field name="platform" type="String" />
+		<field name="registerDate" type="long" />
+	</model>
+</model-hints>
