@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class GCMUtil {
 
-	public void sendMessage(
+	public static void sendNotification(
 			long userId, String collapseKey, String data, int timeToLive,
 			boolean delayWhileIdle)
 		throws IOException, PortalException, SystemException {
@@ -41,8 +41,7 @@ public class GCMUtil {
 		List<Device> devices = DeviceUtil.findByUser(userId);
 
 		if (devices.isEmpty()) {
-			throw new PortalException(
-				"No device id found for userId " + userId);
+			return;
 		}
 
 		List<String> deviceIds = getDeviceIds(devices);
@@ -57,7 +56,7 @@ public class GCMUtil {
 		handleResponse(devices, multicastResult);
 	}
 
-	protected Message buildMessage(
+	protected static Message buildMessage(
 		String collapseKey, String data, int timeToLive,
 		boolean delayWhileIdle) {
 
@@ -80,11 +79,11 @@ public class GCMUtil {
 		return builder.build();
 	}
 
-	protected String getApiKey() {
+	protected static String getApiKey() {
 		return com.liferay.util.portlet.PortletProps.get(API_KEY);
 	}
 
-	protected List<String> getDeviceIds(List<Device> devices) {
+	protected static List<String> getDeviceIds(List<Device> devices) {
 		List<String> deviceIds = new ArrayList<String>();
 
 		for (Device device : devices) {
@@ -94,7 +93,7 @@ public class GCMUtil {
 		return deviceIds;
 	}
 
-	protected void handleError(Device device, String error)
+	protected static void handleError(Device device, String error)
 		throws SystemException {
 
 		if (error.equals(Constants.ERROR_NOT_REGISTERED) ||
@@ -104,7 +103,7 @@ public class GCMUtil {
 		}
 	}
 
-	protected void handleResponse(
+	protected static void handleResponse(
 		List<Device> devices, MulticastResult multicastResult) {
 
 		if ((multicastResult.getCanonicalIds() == 0) &&
@@ -150,8 +149,8 @@ public class GCMUtil {
 		}
 	}
 
-	protected final String API_KEY = "gcm.api.key";
+	protected static final String API_KEY = "gcm.api.key";
 
-	protected final int MAX_TIME_TO_LIVE = 2419200;
+	protected static final int MAX_TIME_TO_LIVE = 2419200;
 
 }
