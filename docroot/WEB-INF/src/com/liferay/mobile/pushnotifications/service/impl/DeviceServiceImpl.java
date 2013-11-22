@@ -34,10 +34,6 @@ import java.util.List;
  */
 public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 
-	public List<Device> getDevices(long userId) throws SystemException {
-		return devicePersistence.findByUser(userId);
-	}
-
 	public void registerDevice(
 			String deviceId, String applicationName, String platform)
 		throws PortalException, SystemException {
@@ -53,12 +49,6 @@ public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 		device.setRegisterDate(System.currentTimeMillis());
 
 		deviceLocalService.addDevice(device);
-	}
-
-	public void sendMessage(long userId)
-		throws IOException, PortalException, SystemException {
-
-		sendMessage(userId, null, null, 2419200, false);
 	}
 
 	public void sendMessage(
