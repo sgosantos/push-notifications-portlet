@@ -14,11 +14,19 @@
 
 package com.liferay.mobile.pushnotifications.service.impl;
 
+import com.liferay.mobile.pushnotifications.model.Device;
 import com.liferay.mobile.pushnotifications.service.base.DeviceLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.SystemException;
+
+import java.util.List;
 
 /**
  * @author Silvio Santos
  */
 public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
+
+	public List<Device> findByUser(long userId) throws SystemException {
+		return devicePersistence.findByUser(userId);
+	}
 
 }

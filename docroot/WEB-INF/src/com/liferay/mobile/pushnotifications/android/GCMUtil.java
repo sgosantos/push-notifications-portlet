@@ -18,7 +18,6 @@ import com.google.android.gcm.server.*;
 
 import com.liferay.mobile.pushnotifications.model.Device;
 import com.liferay.mobile.pushnotifications.service.DeviceLocalServiceUtil;
-import com.liferay.mobile.pushnotifications.service.persistence.DeviceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,7 +37,7 @@ public class GCMUtil {
 			boolean delayWhileIdle)
 		throws IOException, PortalException, SystemException {
 
-		List<Device> devices = DeviceUtil.findByUser(userId);
+		List<Device> devices = DeviceLocalServiceUtil.findByUser(userId);
 
 		if (devices.isEmpty()) {
 			return;
