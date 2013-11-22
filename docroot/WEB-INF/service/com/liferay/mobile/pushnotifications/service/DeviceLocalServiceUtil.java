@@ -275,6 +275,11 @@ public class DeviceLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUser(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByUser(userId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

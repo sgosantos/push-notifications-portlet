@@ -284,6 +284,12 @@ public class DeviceLocalServiceWrapper implements DeviceLocalService,
 		return _deviceLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUser(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return _deviceLocalService.findByUser(userId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
