@@ -62,51 +62,11 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class DeviceServiceSoap {
-	public static com.liferay.mobile.pushnotifications.model.DeviceSoap[] getDevices(
-		long userId) throws RemoteException {
-		try {
-			java.util.List<com.liferay.mobile.pushnotifications.model.Device> returnValue =
-				DeviceServiceUtil.getDevices(userId);
-
-			return com.liferay.mobile.pushnotifications.model.DeviceSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void registerDevice(java.lang.String deviceId,
 		java.lang.String applicationName, java.lang.String platform)
 		throws RemoteException {
 		try {
 			DeviceServiceUtil.registerDevice(deviceId, applicationName, platform);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static void sendMessage(long userId) throws RemoteException {
-		try {
-			DeviceServiceUtil.sendMessage(userId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static void sendMessage(long userId, java.lang.String collapseKey,
-		java.lang.String data, int timeToLive, boolean delayWhileIdle)
-		throws RemoteException {
-		try {
-			DeviceServiceUtil.sendMessage(userId, collapseKey, data,
-				timeToLive, delayWhileIdle);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -57,35 +57,11 @@ public class DeviceServiceWrapper implements DeviceService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> getDevices(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
-		return _deviceService.getDevices(userId);
-	}
-
-	@Override
 	public void registerDevice(java.lang.String deviceId,
 		java.lang.String applicationName, java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_deviceService.registerDevice(deviceId, applicationName, platform);
-	}
-
-	@Override
-	public void sendMessage(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException,
-			java.io.IOException {
-		_deviceService.sendMessage(userId);
-	}
-
-	@Override
-	public void sendMessage(long userId, java.lang.String collapseKey,
-		java.lang.String data, int timeToLive, boolean delayWhileIdle)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException,
-			java.io.IOException {
-		_deviceService.sendMessage(userId, collapseKey, data, timeToLive,
-			delayWhileIdle);
 	}
 
 	@Override

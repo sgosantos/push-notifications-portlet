@@ -32,29 +32,15 @@ public class DeviceServiceClpInvoker {
 
 		_methodParameterTypes19 = new String[] { "java.lang.String" };
 
-		_methodName24 = "getDevices";
+		_methodName24 = "registerDevice";
 
-		_methodParameterTypes24 = new String[] { "long" };
-
-		_methodName25 = "registerDevice";
-
-		_methodParameterTypes25 = new String[] {
+		_methodParameterTypes24 = new String[] {
 				"java.lang.String", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName26 = "sendMessage";
+		_methodName25 = "unregisterDevice";
 
-		_methodParameterTypes26 = new String[] { "long" };
-
-		_methodName27 = "sendMessage";
-
-		_methodParameterTypes27 = new String[] {
-				"long", "java.lang.String", "java.lang.String", "int", "boolean"
-			};
-
-		_methodName28 = "unregisterDevice";
-
-		_methodParameterTypes28 = new String[] { "java.lang.String" };
+		_methodParameterTypes25 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -73,36 +59,14 @@ public class DeviceServiceClpInvoker {
 
 		if (_methodName24.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes24, parameterTypes)) {
-			return DeviceServiceUtil.getDevices(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName25.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes25, parameterTypes)) {
 			DeviceServiceUtil.registerDevice((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 
 			return null;
 		}
 
-		if (_methodName26.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes26, parameterTypes)) {
-			DeviceServiceUtil.sendMessage(((Long)arguments[0]).longValue());
-
-			return null;
-		}
-
-		if (_methodName27.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes27, parameterTypes)) {
-			DeviceServiceUtil.sendMessage(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
-				((Integer)arguments[3]).intValue(),
-				((Boolean)arguments[4]).booleanValue());
-
-			return null;
-		}
-
-		if (_methodName28.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes28, parameterTypes)) {
+		if (_methodName25.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes25, parameterTypes)) {
 			DeviceServiceUtil.unregisterDevice((java.lang.String)arguments[0]);
 
 			return null;
@@ -119,10 +83,4 @@ public class DeviceServiceClpInvoker {
 	private String[] _methodParameterTypes24;
 	private String _methodName25;
 	private String[] _methodParameterTypes25;
-	private String _methodName26;
-	private String[] _methodParameterTypes26;
-	private String _methodName27;
-	private String[] _methodParameterTypes27;
-	private String _methodName28;
-	private String[] _methodParameterTypes28;
 }

@@ -63,32 +63,11 @@ public class DeviceServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> getDevices(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getDevices(userId);
-	}
-
 	public static void registerDevice(java.lang.String deviceId,
 		java.lang.String applicationName, java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().registerDevice(deviceId, applicationName, platform);
-	}
-
-	public static void sendMessage(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException,
-			java.io.IOException {
-		getService().sendMessage(userId);
-	}
-
-	public static void sendMessage(long userId, java.lang.String collapseKey,
-		java.lang.String data, int timeToLive, boolean delayWhileIdle)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException,
-			java.io.IOException {
-		getService()
-			.sendMessage(userId, collapseKey, data, timeToLive, delayWhileIdle);
 	}
 
 	public static void unregisterDevice(java.lang.String deviceId)
