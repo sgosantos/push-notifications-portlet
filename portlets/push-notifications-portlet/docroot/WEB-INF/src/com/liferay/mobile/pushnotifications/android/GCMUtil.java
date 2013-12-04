@@ -24,6 +24,8 @@ import com.liferay.mobile.pushnotifications.model.Device;
 import com.liferay.mobile.pushnotifications.service.DeviceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -146,8 +148,8 @@ public class GCMUtil {
 					handleError(device, error);
 				}
 			}
-			catch (SystemException e) {
-				e.printStackTrace();
+			catch (SystemException se) {
+				_log.error(se);
 			}
 		}
 	}
@@ -155,5 +157,7 @@ public class GCMUtil {
 	protected static final String API_KEY = "gcm.api.key";
 
 	protected static final int MAX_TIME_TO_LIVE = 2419200;
+
+	private static Log _log = LogFactoryUtil.getLog(GCMUtil.class);
 
 }

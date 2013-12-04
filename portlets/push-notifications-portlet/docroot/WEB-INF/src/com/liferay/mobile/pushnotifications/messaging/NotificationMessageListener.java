@@ -15,12 +15,10 @@
 package com.liferay.mobile.pushnotifications.messaging;
 
 import com.liferay.mobile.pushnotifications.android.GCMUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-
-import java.io.IOException;
 
 import java.util.List;
 
@@ -42,16 +40,13 @@ public class NotificationMessageListener implements MessageListener {
 				GCMUtil.sendNotification(
 					userId, collapseKey, data, timeToLive, delayWhileIdle);
 			}
-			catch (PortalException e) {
-				e.printStackTrace();
-			}
-			catch (SystemException e) {
-				e.printStackTrace();
-			}
-			catch (IOException e) {
-				e.printStackTrace();
+			catch (Exception e) {
+				_log.error(e);
 			}
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		NotificationMessageListener.class);
 
 }
