@@ -27,7 +27,6 @@ import java.util.List;
  */
 public class NotificationMessageListener implements MessageListener {
 
-	@Override
 	public void receive(Message message) {
 		List<Long> userIds = (List<Long>)message.get("userIds");
 		String collapseKey = message.getString("collapseKey");

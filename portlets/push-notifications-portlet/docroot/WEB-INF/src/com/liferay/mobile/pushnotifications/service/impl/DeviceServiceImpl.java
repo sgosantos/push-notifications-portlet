@@ -26,6 +26,7 @@ import com.liferay.portal.model.User;
  */
 public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 
+	@Override
 	public void registerDevice(
 			String deviceId, String applicationName, String platform)
 		throws PortalException, SystemException {
@@ -43,6 +44,7 @@ public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 		deviceLocalService.addDevice(device);
 	}
 
+	@Override
 	public void unregisterDevice(String deviceId)
 		throws PortalException, SystemException {
 

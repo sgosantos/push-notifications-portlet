@@ -25,6 +25,7 @@ import java.util.List;
  */
 public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 
+	@Override
 	public List<Device> findByUser(long userId) throws SystemException {
 		return devicePersistence.findByUser(userId);
 	}
