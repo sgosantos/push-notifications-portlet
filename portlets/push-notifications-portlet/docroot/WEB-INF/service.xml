@@ -10,14 +10,10 @@
 
 		<column name="deviceId" type="String" primary="true" />
 
-		<!-- Other fields -->
+		<!-- Audit fields -->
 
 		<column name="userId" type="long" />
-		<column name="applicationName" type="String" />
-		<column name="platform" type="String" />
-		<column name="registerDate" type="long" />
-
-		<!-- Order -->
+		<column name="createDate" type="Date" />
 
 		<!-- Finder methods -->
 

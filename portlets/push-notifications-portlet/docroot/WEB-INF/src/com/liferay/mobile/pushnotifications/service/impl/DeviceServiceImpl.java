@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 
+import java.util.Date;
+
 /**
  * @author Silvio Santos
  */
@@ -37,9 +39,7 @@ public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 
 		device.setDeviceId(deviceId);
 		device.setUserId(user.getUserId());
-		device.setApplicationName(applicationName);
-		device.setPlatform(platform);
-		device.setRegisterDate(System.currentTimeMillis());
+		device.setCreateDate(new Date());
 
 		deviceLocalService.addDevice(device);
 	}
