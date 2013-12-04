@@ -14,7 +14,11 @@
 
 package com.liferay.mobile.pushnotifications.android;
 
-import com.google.android.gcm.server.*;
+import com.google.android.gcm.server.Constants;
+import com.google.android.gcm.server.Message;
+import com.google.android.gcm.server.MulticastResult;
+import com.google.android.gcm.server.Result;
+import com.google.android.gcm.server.Sender;
 
 import com.liferay.mobile.pushnotifications.model.Device;
 import com.liferay.mobile.pushnotifications.service.DeviceLocalServiceUtil;
