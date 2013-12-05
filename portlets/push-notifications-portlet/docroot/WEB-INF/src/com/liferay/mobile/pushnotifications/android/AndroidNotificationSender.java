@@ -23,7 +23,6 @@ import com.google.android.gcm.server.Sender;
 import com.liferay.mobile.pushnotifications.model.Device;
 import com.liferay.mobile.pushnotifications.service.DeviceLocalServiceUtil;
 import com.liferay.mobile.pushnotifications.util.PortletPropsValues;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,7 +42,7 @@ public class AndroidNotificationSender {
 	public static void send(
 			long userId, String collapseKey, String data, int timeToLive,
 			boolean delayWhileIdle)
-		throws IOException, PortalException, SystemException {
+		throws IOException, SystemException {
 
 		List<Device> devices = DeviceLocalServiceUtil.getUserDevices(userId);
 
@@ -96,16 +95,6 @@ public class AndroidNotificationSender {
 		return tokens;
 	}
 
-	protected static void handleError(Device device, String error)
-		throws SystemException {
-
-		if (error.equals(Constants.ERROR_NOT_REGISTERED) ||
-			error.equals(Constants.ERROR_INVALID_REGISTRATION)) {
-
-			DeviceLocalServiceUtil.deleteDevice(device);
-		}
-	}
-
 	protected static void handleResponse(
 		List<Device> devices, MulticastResult multicastResult) {
 
@@ -117,9 +106,7 @@ public class AndroidNotificationSender {
 
 		List<Result> results = multicastResult.getResults();
 
-		int size = results.size();
-
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < results.size(); i++) {
 			Result result = results.get(i);
 
 			String messageId = result.getMessageId();
@@ -143,7 +130,11 @@ public class AndroidNotificationSender {
 				String error = result.getErrorCodeName();
 
 				if (Validator.isNotNull(error)) {
-					handleError(device, error);
+					if (error.equals(Constants.ERROR_NOT_REGISTERED) ||
+						error.equals(Constants.ERROR_INVALID_REGISTRATION)) {
+
+						DeviceLocalServiceUtil.deleteDevice(device);
+					}
 				}
 			}
 			catch (SystemException se) {
