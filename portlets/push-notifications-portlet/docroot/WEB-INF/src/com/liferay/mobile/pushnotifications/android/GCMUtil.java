@@ -43,20 +43,20 @@ public class GCMUtil {
 			boolean delayWhileIdle)
 		throws IOException, PortalException, SystemException {
 
-		List<Device> devices = DeviceLocalServiceUtil.findByUser(userId);
+		List<Device> devices = DeviceLocalServiceUtil.getUserDevices(userId);
 
 		if (devices.isEmpty()) {
 			return;
 		}
 
-		List<String> deviceIds = getDeviceIds(devices);
+		List<String> tokens = getTokens(devices);
 
 		Message message = buildMessage(
 			collapseKey, data, timeToLive, delayWhileIdle);
 
 		Sender sender = new Sender(getApiKey());
 
-		MulticastResult multicastResult = sender.send(message, deviceIds, 5);
+		MulticastResult multicastResult = sender.send(message, tokens, 5);
 
 		handleResponse(devices, multicastResult);
 	}
@@ -88,14 +88,14 @@ public class GCMUtil {
 		return com.liferay.util.portlet.PortletProps.get(API_KEY);
 	}
 
-	protected static List<String> getDeviceIds(List<Device> devices) {
-		List<String> deviceIds = new ArrayList<String>();
+	protected static List<String> getTokens(List<Device> devices) {
+		List<String> tokens = new ArrayList<String>();
 
 		for (Device device : devices) {
-			deviceIds.add(device.getDeviceId());
+			tokens.add(device.getToken());
 		}
 
-		return deviceIds;
+		return tokens;
 	}
 
 	protected static void handleError(Device device, String error)
@@ -125,17 +125,17 @@ public class GCMUtil {
 			Result result = results.get(i);
 
 			String messageId = result.getMessageId();
-			String canonicalId = result.getCanonicalRegistrationId();
+			String token = result.getCanonicalRegistrationId();
 
 			Device device = devices.get(i);
 
 			try {
 				if (Validator.isNotNull(messageId) &&
-					Validator.isNotNull(canonicalId)) {
+					Validator.isNotNull(token)) {
 
 					DeviceLocalServiceUtil.deleteDevice(device);
 
-					device.setDeviceId(canonicalId);
+					device.setToken(token);
 
 					DeviceLocalServiceUtil.addDevice(device);
 

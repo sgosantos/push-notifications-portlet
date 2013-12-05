@@ -8,12 +8,16 @@
 
 		<!-- PK fields -->
 
-		<column name="deviceId" type="String" primary="true" />
+		<column name="deviceId" type="long" primary="true" />
 
 		<!-- Audit fields -->
 
 		<column name="userId" type="long" />
 		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="token" type="String" />
 
 		<!-- Finder methods -->
 
