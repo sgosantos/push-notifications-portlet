@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.pushnotifications.messaging;
 
-import com.liferay.mobile.pushnotifications.android.GCMUtil;
+import com.liferay.mobile.pushnotifications.android.AndroidNotificationSender;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -36,7 +36,7 @@ public class NotificationMessageListener implements MessageListener {
 
 		for (long userId : userIds) {
 			try {
-				GCMUtil.sendNotification(
+				AndroidNotificationSender.send(
 					userId, collapseKey, data, timeToLive, delayWhileIdle);
 			}
 			catch (Exception e) {

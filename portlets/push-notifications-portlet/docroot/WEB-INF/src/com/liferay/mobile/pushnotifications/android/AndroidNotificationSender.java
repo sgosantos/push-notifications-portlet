@@ -22,6 +22,7 @@ import com.google.android.gcm.server.Sender;
 
 import com.liferay.mobile.pushnotifications.model.Device;
 import com.liferay.mobile.pushnotifications.service.DeviceLocalServiceUtil;
+import com.liferay.mobile.pushnotifications.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,10 +36,11 @@ import java.util.List;
 
 /**
  * @author Silvio Santos
+ * @author Bruno Farache
  */
-public class GCMUtil {
+public class AndroidNotificationSender {
 
-	public static void sendNotification(
+	public static void send(
 			long userId, String collapseKey, String data, int timeToLive,
 			boolean delayWhileIdle)
 		throws IOException, PortalException, SystemException {
@@ -54,7 +56,7 @@ public class GCMUtil {
 		Message message = buildMessage(
 			collapseKey, data, timeToLive, delayWhileIdle);
 
-		Sender sender = new Sender(getApiKey());
+		Sender sender = new Sender(PortletPropsValues.ANDROID_API_KEY);
 
 		MulticastResult multicastResult = sender.send(message, tokens, 5);
 
@@ -82,10 +84,6 @@ public class GCMUtil {
 		builder.delayWhileIdle(delayWhileIdle);
 
 		return builder.build();
-	}
-
-	protected static String getApiKey() {
-		return com.liferay.util.portlet.PortletProps.get(API_KEY);
 	}
 
 	protected static List<String> getTokens(List<Device> devices) {
@@ -154,10 +152,9 @@ public class GCMUtil {
 		}
 	}
 
-	protected static final String API_KEY = "gcm.api.key";
-
 	protected static final int MAX_TIME_TO_LIVE = 2419200;
 
-	private static Log _log = LogFactoryUtil.getLog(GCMUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		AndroidNotificationSender.class);
 
 }
