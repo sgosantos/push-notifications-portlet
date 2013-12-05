@@ -15,15 +15,31 @@
 package com.liferay.mobile.pushnotifications.service.impl;
 
 import com.liferay.mobile.pushnotifications.model.Device;
+import com.liferay.mobile.pushnotifications.model.impl.DeviceImpl;
 import com.liferay.mobile.pushnotifications.service.base.DeviceLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * @author Silvio Santos
  */
 public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
+
+	@Override
+	public void addDevice(long userId, String deviceId)
+		throws PortalException, SystemException {
+
+		Device device = new DeviceImpl();
+
+		device.setUserId(userId);
+		device.setDeviceId(deviceId);
+		device.setCreateDate(new Date());
+
+		deviceLocalService.addDevice(device);
+	}
 
 	@Override
 	public List<Device> findByUser(long userId) throws SystemException {
