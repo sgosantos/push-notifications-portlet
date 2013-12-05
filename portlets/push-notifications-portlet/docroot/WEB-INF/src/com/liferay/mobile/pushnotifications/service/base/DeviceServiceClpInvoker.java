@@ -32,13 +32,11 @@ public class DeviceServiceClpInvoker {
 
 		_methodParameterTypes19 = new String[] { "java.lang.String" };
 
-		_methodName24 = "registerDevice";
+		_methodName24 = "addDevice";
 
-		_methodParameterTypes24 = new String[] {
-				"java.lang.String", "java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes24 = new String[] { "java.lang.String" };
 
-		_methodName25 = "unregisterDevice";
+		_methodName25 = "deleteDevice";
 
 		_methodParameterTypes25 = new String[] { "java.lang.String" };
 	}
@@ -59,15 +57,14 @@ public class DeviceServiceClpInvoker {
 
 		if (_methodName24.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes24, parameterTypes)) {
-			DeviceServiceUtil.registerDevice((java.lang.String)arguments[0],
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+			DeviceServiceUtil.addDevice((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
 		if (_methodName25.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes25, parameterTypes)) {
-			DeviceServiceUtil.unregisterDevice((java.lang.String)arguments[0]);
+			DeviceServiceUtil.deleteDevice((java.lang.String)arguments[0]);
 
 			return null;
 		}

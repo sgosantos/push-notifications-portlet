@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing Device in entity cache.
  *
@@ -35,18 +37,16 @@ import java.io.ObjectOutput;
 public class DeviceCacheModel implements CacheModel<Device>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{deviceId=");
 		sb.append(deviceId);
 		sb.append(", userId=");
 		sb.append(userId);
-		sb.append(", applicationName=");
-		sb.append(applicationName);
-		sb.append(", platform=");
-		sb.append(platform);
-		sb.append(", registerDate=");
-		sb.append(registerDate);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", token=");
+		sb.append(token);
 		sb.append("}");
 
 		return sb.toString();
@@ -56,30 +56,22 @@ public class DeviceCacheModel implements CacheModel<Device>, Externalizable {
 	public Device toEntityModel() {
 		DeviceImpl deviceImpl = new DeviceImpl();
 
-		if (deviceId == null) {
-			deviceImpl.setDeviceId(StringPool.BLANK);
-		}
-		else {
-			deviceImpl.setDeviceId(deviceId);
-		}
-
+		deviceImpl.setDeviceId(deviceId);
 		deviceImpl.setUserId(userId);
 
-		if (applicationName == null) {
-			deviceImpl.setApplicationName(StringPool.BLANK);
+		if (createDate == Long.MIN_VALUE) {
+			deviceImpl.setCreateDate(null);
 		}
 		else {
-			deviceImpl.setApplicationName(applicationName);
+			deviceImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (platform == null) {
-			deviceImpl.setPlatform(StringPool.BLANK);
+		if (token == null) {
+			deviceImpl.setToken(StringPool.BLANK);
 		}
 		else {
-			deviceImpl.setPlatform(platform);
+			deviceImpl.setToken(token);
 		}
-
-		deviceImpl.setRegisterDate(registerDate);
 
 		deviceImpl.resetOriginalValues();
 
@@ -88,45 +80,29 @@ public class DeviceCacheModel implements CacheModel<Device>, Externalizable {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		deviceId = objectInput.readUTF();
+		deviceId = objectInput.readLong();
 		userId = objectInput.readLong();
-		applicationName = objectInput.readUTF();
-		platform = objectInput.readUTF();
-		registerDate = objectInput.readLong();
+		createDate = objectInput.readLong();
+		token = objectInput.readUTF();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		if (deviceId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(deviceId);
-		}
-
+		objectOutput.writeLong(deviceId);
 		objectOutput.writeLong(userId);
+		objectOutput.writeLong(createDate);
 
-		if (applicationName == null) {
+		if (token == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(applicationName);
+			objectOutput.writeUTF(token);
 		}
-
-		if (platform == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(platform);
-		}
-
-		objectOutput.writeLong(registerDate);
 	}
 
-	public String deviceId;
+	public long deviceId;
 	public long userId;
-	public String applicationName;
-	public String platform;
-	public long registerDate;
+	public long createDate;
+	public String token;
 }

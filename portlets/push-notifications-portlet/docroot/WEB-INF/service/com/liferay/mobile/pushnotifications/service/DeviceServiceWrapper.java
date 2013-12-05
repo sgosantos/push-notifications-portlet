@@ -57,18 +57,17 @@ public class DeviceServiceWrapper implements DeviceService,
 	}
 
 	@Override
-	public void registerDevice(java.lang.String deviceId,
-		java.lang.String applicationName, java.lang.String platform)
+	public void addDevice(java.lang.String deviceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_deviceService.registerDevice(deviceId, applicationName, platform);
+		_deviceService.addDevice(deviceId);
 	}
 
 	@Override
-	public void unregisterDevice(java.lang.String deviceId)
+	public void deleteDevice(java.lang.String token)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_deviceService.unregisterDevice(deviceId);
+		_deviceService.deleteDevice(token);
 	}
 
 	/**

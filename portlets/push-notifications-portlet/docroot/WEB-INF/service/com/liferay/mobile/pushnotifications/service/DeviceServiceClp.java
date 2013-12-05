@@ -32,13 +32,11 @@ public class DeviceServiceClp implements DeviceService {
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
 
-		_methodName3 = "registerDevice";
+		_methodName3 = "addDevice";
 
-		_methodParameterTypes3 = new String[] {
-				"java.lang.String", "java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes3 = new String[] { "java.lang.String" };
 
-		_methodName4 = "unregisterDevice";
+		_methodName4 = "deleteDevice";
 
 		_methodParameterTypes4 = new String[] { "java.lang.String" };
 	}
@@ -94,20 +92,13 @@ public class DeviceServiceClp implements DeviceService {
 	}
 
 	@Override
-	public void registerDevice(java.lang.String deviceId,
-		java.lang.String applicationName, java.lang.String platform)
+	public void addDevice(java.lang.String deviceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableService.invokeMethod(_methodName3,
 				_methodParameterTypes3,
-				new Object[] {
-					ClpSerializer.translateInput(deviceId),
-					
-				ClpSerializer.translateInput(applicationName),
-					
-				ClpSerializer.translateInput(platform)
-				});
+				new Object[] { ClpSerializer.translateInput(deviceId) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -131,13 +122,13 @@ public class DeviceServiceClp implements DeviceService {
 	}
 
 	@Override
-	public void unregisterDevice(java.lang.String deviceId)
+	public void deleteDevice(java.lang.String token)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableService.invokeMethod(_methodName4,
 				_methodParameterTypes4,
-				new Object[] { ClpSerializer.translateInput(deviceId) });
+				new Object[] { ClpSerializer.translateInput(token) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

@@ -62,11 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class DeviceServiceSoap {
-	public static void registerDevice(java.lang.String deviceId,
-		java.lang.String applicationName, java.lang.String platform)
+	public static void addDevice(java.lang.String deviceId)
 		throws RemoteException {
 		try {
-			DeviceServiceUtil.registerDevice(deviceId, applicationName, platform);
+			DeviceServiceUtil.addDevice(deviceId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -75,10 +74,10 @@ public class DeviceServiceSoap {
 		}
 	}
 
-	public static void unregisterDevice(java.lang.String deviceId)
+	public static void deleteDevice(java.lang.String token)
 		throws RemoteException {
 		try {
-			DeviceServiceUtil.unregisterDevice(deviceId);
+			DeviceServiceUtil.deleteDevice(token);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

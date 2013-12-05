@@ -27,13 +27,18 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,13 +66,12 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 	 */
 	public static final String TABLE_NAME = "PushNotifications_Device";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "deviceId", Types.VARCHAR },
+			{ "deviceId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
-			{ "applicationName", Types.VARCHAR },
-			{ "platform", Types.VARCHAR },
-			{ "registerDate", Types.BIGINT }
+			{ "createDate", Types.TIMESTAMP },
+			{ "token", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PushNotifications_Device (deviceId VARCHAR(75) not null primary key,userId LONG,applicationName VARCHAR(75) null,platform VARCHAR(75) null,registerDate LONG)";
+	public static final String TABLE_SQL_CREATE = "create table PushNotifications_Device (deviceId LONG not null primary key,userId LONG,createDate DATE null,token VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table PushNotifications_Device";
 	public static final String ORDER_BY_JPQL = " ORDER BY device.deviceId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PushNotifications_Device.deviceId ASC";
@@ -83,8 +87,9 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.mobile.pushnotifications.model.Device"),
 			true);
-	public static long USERID_COLUMN_BITMASK = 1L;
-	public static long DEVICEID_COLUMN_BITMASK = 2L;
+	public static long TOKEN_COLUMN_BITMASK = 1L;
+	public static long USERID_COLUMN_BITMASK = 2L;
+	public static long DEVICEID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -101,9 +106,8 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 		model.setDeviceId(soapModel.getDeviceId());
 		model.setUserId(soapModel.getUserId());
-		model.setApplicationName(soapModel.getApplicationName());
-		model.setPlatform(soapModel.getPlatform());
-		model.setRegisterDate(soapModel.getRegisterDate());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setToken(soapModel.getToken());
 
 		return model;
 	}
@@ -135,12 +139,12 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 	}
 
 	@Override
-	public String getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _deviceId;
 	}
 
 	@Override
-	public void setPrimaryKey(String primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setDeviceId(primaryKey);
 	}
 
@@ -151,7 +155,7 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey((String)primaryKeyObj);
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -170,16 +174,15 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 		attributes.put("deviceId", getDeviceId());
 		attributes.put("userId", getUserId());
-		attributes.put("applicationName", getApplicationName());
-		attributes.put("platform", getPlatform());
-		attributes.put("registerDate", getRegisterDate());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("token", getToken());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String deviceId = (String)attributes.get("deviceId");
+		Long deviceId = (Long)attributes.get("deviceId");
 
 		if (deviceId != null) {
 			setDeviceId(deviceId);
@@ -191,38 +194,27 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 			setUserId(userId);
 		}
 
-		String applicationName = (String)attributes.get("applicationName");
+		Date createDate = (Date)attributes.get("createDate");
 
-		if (applicationName != null) {
-			setApplicationName(applicationName);
+		if (createDate != null) {
+			setCreateDate(createDate);
 		}
 
-		String platform = (String)attributes.get("platform");
+		String token = (String)attributes.get("token");
 
-		if (platform != null) {
-			setPlatform(platform);
-		}
-
-		Long registerDate = (Long)attributes.get("registerDate");
-
-		if (registerDate != null) {
-			setRegisterDate(registerDate);
+		if (token != null) {
+			setToken(token);
 		}
 	}
 
 	@JSON
 	@Override
-	public String getDeviceId() {
-		if (_deviceId == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _deviceId;
-		}
+	public long getDeviceId() {
+		return _deviceId;
 	}
 
 	@Override
-	public void setDeviceId(String deviceId) {
+	public void setDeviceId(long deviceId) {
 		_deviceId = deviceId;
 	}
 
@@ -261,49 +253,56 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 	@JSON
 	@Override
-	public String getApplicationName() {
-		if (_applicationName == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _applicationName;
-		}
+	public Date getCreateDate() {
+		return _createDate;
 	}
 
 	@Override
-	public void setApplicationName(String applicationName) {
-		_applicationName = applicationName;
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
 	}
 
 	@JSON
 	@Override
-	public String getPlatform() {
-		if (_platform == null) {
+	public String getToken() {
+		if (_token == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _platform;
+			return _token;
 		}
 	}
 
 	@Override
-	public void setPlatform(String platform) {
-		_platform = platform;
+	public void setToken(String token) {
+		_columnBitmask |= TOKEN_COLUMN_BITMASK;
+
+		if (_originalToken == null) {
+			_originalToken = _token;
+		}
+
+		_token = token;
 	}
 
-	@JSON
-	@Override
-	public long getRegisterDate() {
-		return _registerDate;
-	}
-
-	@Override
-	public void setRegisterDate(long registerDate) {
-		_registerDate = registerDate;
+	public String getOriginalToken() {
+		return GetterUtil.getString(_originalToken);
 	}
 
 	public long getColumnBitmask() {
 		return _columnBitmask;
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+			Device.class.getName(), getPrimaryKey());
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -322,9 +321,8 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 		deviceImpl.setDeviceId(getDeviceId());
 		deviceImpl.setUserId(getUserId());
-		deviceImpl.setApplicationName(getApplicationName());
-		deviceImpl.setPlatform(getPlatform());
-		deviceImpl.setRegisterDate(getRegisterDate());
+		deviceImpl.setCreateDate(getCreateDate());
+		deviceImpl.setToken(getToken());
 
 		deviceImpl.resetOriginalValues();
 
@@ -333,9 +331,17 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 	@Override
 	public int compareTo(Device device) {
-		String primaryKey = device.getPrimaryKey();
+		long primaryKey = device.getPrimaryKey();
 
-		return getPrimaryKey().compareTo(primaryKey);
+		if (getPrimaryKey() < primaryKey) {
+			return -1;
+		}
+		else if (getPrimaryKey() > primaryKey) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -350,9 +356,9 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 		Device device = (Device)obj;
 
-		String primaryKey = device.getPrimaryKey();
+		long primaryKey = device.getPrimaryKey();
 
-		if (getPrimaryKey().equals(primaryKey)) {
+		if (getPrimaryKey() == primaryKey) {
 			return true;
 		}
 		else {
@@ -362,7 +368,7 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey().hashCode();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
@@ -373,6 +379,8 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 		deviceModelImpl._setOriginalUserId = false;
 
+		deviceModelImpl._originalToken = deviceModelImpl._token;
+
 		deviceModelImpl._columnBitmask = 0;
 	}
 
@@ -382,49 +390,40 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 		deviceCacheModel.deviceId = getDeviceId();
 
-		String deviceId = deviceCacheModel.deviceId;
-
-		if ((deviceId != null) && (deviceId.length() == 0)) {
-			deviceCacheModel.deviceId = null;
-		}
-
 		deviceCacheModel.userId = getUserId();
 
-		deviceCacheModel.applicationName = getApplicationName();
+		Date createDate = getCreateDate();
 
-		String applicationName = deviceCacheModel.applicationName;
-
-		if ((applicationName != null) && (applicationName.length() == 0)) {
-			deviceCacheModel.applicationName = null;
+		if (createDate != null) {
+			deviceCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			deviceCacheModel.createDate = Long.MIN_VALUE;
 		}
 
-		deviceCacheModel.platform = getPlatform();
+		deviceCacheModel.token = getToken();
 
-		String platform = deviceCacheModel.platform;
+		String token = deviceCacheModel.token;
 
-		if ((platform != null) && (platform.length() == 0)) {
-			deviceCacheModel.platform = null;
+		if ((token != null) && (token.length() == 0)) {
+			deviceCacheModel.token = null;
 		}
-
-		deviceCacheModel.registerDate = getRegisterDate();
 
 		return deviceCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{deviceId=");
 		sb.append(getDeviceId());
 		sb.append(", userId=");
 		sb.append(getUserId());
-		sb.append(", applicationName=");
-		sb.append(getApplicationName());
-		sb.append(", platform=");
-		sb.append(getPlatform());
-		sb.append(", registerDate=");
-		sb.append(getRegisterDate());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
+		sb.append(", token=");
+		sb.append(getToken());
 		sb.append("}");
 
 		return sb.toString();
@@ -432,7 +431,7 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.mobile.pushnotifications.model.Device");
@@ -447,16 +446,12 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>applicationName</column-name><column-value><![CDATA[");
-		sb.append(getApplicationName());
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>platform</column-name><column-value><![CDATA[");
-		sb.append(getPlatform());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>registerDate</column-name><column-value><![CDATA[");
-		sb.append(getRegisterDate());
+			"<column><column-name>token</column-name><column-value><![CDATA[");
+		sb.append(getToken());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -466,14 +461,14 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 	private static ClassLoader _classLoader = Device.class.getClassLoader();
 	private static Class<?>[] _escapedModelInterfaces = new Class[] { Device.class };
-	private String _deviceId;
+	private long _deviceId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
-	private String _applicationName;
-	private String _platform;
-	private long _registerDate;
+	private Date _createDate;
+	private String _token;
+	private String _originalToken;
 	private long _columnBitmask;
 	private Device _escapedModel;
 }

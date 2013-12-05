@@ -11,9 +11,10 @@
 		<attributes>
 			<id name="deviceId" />
 			<basic name="userId" />
-			<basic name="applicationName" />
-			<basic name="platform" />
-			<basic name="registerDate" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="token" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

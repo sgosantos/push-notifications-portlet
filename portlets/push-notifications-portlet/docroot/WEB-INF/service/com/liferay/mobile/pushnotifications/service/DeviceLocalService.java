@@ -63,7 +63,7 @@ public interface DeviceLocalService extends BaseLocalService,
 	* @return the new device
 	*/
 	public com.liferay.mobile.pushnotifications.model.Device createDevice(
-		java.lang.String deviceId);
+		long deviceId);
 
 	/**
 	* Deletes the device with the primary key from the database. Also notifies the appropriate model listeners.
@@ -74,7 +74,7 @@ public interface DeviceLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.mobile.pushnotifications.model.Device deleteDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -168,7 +168,7 @@ public interface DeviceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.mobile.pushnotifications.model.Device fetchDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -181,7 +181,7 @@ public interface DeviceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.mobile.pushnotifications.model.Device getDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -249,6 +249,15 @@ public interface DeviceLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUser(
+	public void addDevice(long userId, java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteDevice(long userId, java.lang.String token)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> getUserDevices(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException;
 }

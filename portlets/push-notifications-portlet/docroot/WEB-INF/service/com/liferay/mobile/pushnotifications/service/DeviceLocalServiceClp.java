@@ -32,11 +32,11 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 
 		_methodName1 = "createDevice";
 
-		_methodParameterTypes1 = new String[] { "java.lang.String" };
+		_methodParameterTypes1 = new String[] { "long" };
 
 		_methodName2 = "deleteDevice";
 
-		_methodParameterTypes2 = new String[] { "java.lang.String" };
+		_methodParameterTypes2 = new String[] { "long" };
 
 		_methodName3 = "deleteDevice";
 
@@ -82,11 +82,11 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 
 		_methodName10 = "fetchDevice";
 
-		_methodParameterTypes10 = new String[] { "java.lang.String" };
+		_methodParameterTypes10 = new String[] { "long" };
 
 		_methodName11 = "getDevice";
 
-		_methodParameterTypes11 = new String[] { "java.lang.String" };
+		_methodParameterTypes11 = new String[] { "long" };
 
 		_methodName12 = "getPersistedModel";
 
@@ -114,9 +114,17 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "findByUser";
+		_methodName19 = "addDevice";
 
-		_methodParameterTypes19 = new String[] { "long" };
+		_methodParameterTypes19 = new String[] { "long", "java.lang.String" };
+
+		_methodName20 = "deleteDevice";
+
+		_methodParameterTypes20 = new String[] { "long", "java.lang.String" };
+
+		_methodName21 = "getUserDevices";
+
+		_methodParameterTypes21 = new String[] { "long" };
 	}
 
 	@Override
@@ -151,13 +159,12 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 
 	@Override
 	public com.liferay.mobile.pushnotifications.model.Device createDevice(
-		java.lang.String deviceId) {
+		long deviceId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1,
-					new Object[] { ClpSerializer.translateInput(deviceId) });
+					_methodParameterTypes1, new Object[] { deviceId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -176,15 +183,14 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 
 	@Override
 	public com.liferay.mobile.pushnotifications.model.Device deleteDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2,
-					new Object[] { ClpSerializer.translateInput(deviceId) });
+					_methodParameterTypes2, new Object[] { deviceId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -438,14 +444,13 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 
 	@Override
 	public com.liferay.mobile.pushnotifications.model.Device fetchDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10,
-					new Object[] { ClpSerializer.translateInput(deviceId) });
+					_methodParameterTypes10, new Object[] { deviceId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -468,15 +473,14 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 
 	@Override
 	public com.liferay.mobile.pushnotifications.model.Device getDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
-					_methodParameterTypes11,
-					new Object[] { ClpSerializer.translateInput(deviceId) });
+					_methodParameterTypes11, new Object[] { deviceId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -674,13 +678,73 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 	}
 
 	@Override
-	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUser(
+	public void addDevice(long userId, java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName19,
+				_methodParameterTypes19,
+				new Object[] { userId, ClpSerializer.translateInput(token) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void deleteDevice(long userId, java.lang.String token)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName20,
+				_methodParameterTypes20,
+				new Object[] { userId, ClpSerializer.translateInput(token) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.mobile.pushnotifications.NoSuchDeviceException) {
+				throw (com.liferay.mobile.pushnotifications.NoSuchDeviceException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> getUserDevices(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { userId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { userId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -740,4 +804,8 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 }

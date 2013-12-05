@@ -29,6 +29,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,12 +51,12 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 	}
 
 	@Override
-	public String getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _deviceId;
 	}
 
 	@Override
-	public void setPrimaryKey(String primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setDeviceId(primaryKey);
 	}
 
@@ -66,7 +67,7 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey((String)primaryKeyObj);
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -75,16 +76,15 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 
 		attributes.put("deviceId", getDeviceId());
 		attributes.put("userId", getUserId());
-		attributes.put("applicationName", getApplicationName());
-		attributes.put("platform", getPlatform());
-		attributes.put("registerDate", getRegisterDate());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("token", getToken());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String deviceId = (String)attributes.get("deviceId");
+		Long deviceId = (Long)attributes.get("deviceId");
 
 		if (deviceId != null) {
 			setDeviceId(deviceId);
@@ -96,39 +96,33 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 			setUserId(userId);
 		}
 
-		String applicationName = (String)attributes.get("applicationName");
+		Date createDate = (Date)attributes.get("createDate");
 
-		if (applicationName != null) {
-			setApplicationName(applicationName);
+		if (createDate != null) {
+			setCreateDate(createDate);
 		}
 
-		String platform = (String)attributes.get("platform");
+		String token = (String)attributes.get("token");
 
-		if (platform != null) {
-			setPlatform(platform);
-		}
-
-		Long registerDate = (Long)attributes.get("registerDate");
-
-		if (registerDate != null) {
-			setRegisterDate(registerDate);
+		if (token != null) {
+			setToken(token);
 		}
 	}
 
 	@Override
-	public String getDeviceId() {
+	public long getDeviceId() {
 		return _deviceId;
 	}
 
 	@Override
-	public void setDeviceId(String deviceId) {
+	public void setDeviceId(long deviceId) {
 		_deviceId = deviceId;
 
 		if (_deviceRemoteModel != null) {
 			try {
 				Class<?> clazz = _deviceRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setDeviceId", String.class);
+				Method method = clazz.getMethod("setDeviceId", long.class);
 
 				method.invoke(_deviceRemoteModel, deviceId);
 			}
@@ -172,22 +166,21 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 	}
 
 	@Override
-	public String getApplicationName() {
-		return _applicationName;
+	public Date getCreateDate() {
+		return _createDate;
 	}
 
 	@Override
-	public void setApplicationName(String applicationName) {
-		_applicationName = applicationName;
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
 
 		if (_deviceRemoteModel != null) {
 			try {
 				Class<?> clazz = _deviceRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setApplicationName",
-						String.class);
+				Method method = clazz.getMethod("setCreateDate", Date.class);
 
-				method.invoke(_deviceRemoteModel, applicationName);
+				method.invoke(_deviceRemoteModel, createDate);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -196,44 +189,21 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 	}
 
 	@Override
-	public String getPlatform() {
-		return _platform;
+	public String getToken() {
+		return _token;
 	}
 
 	@Override
-	public void setPlatform(String platform) {
-		_platform = platform;
+	public void setToken(String token) {
+		_token = token;
 
 		if (_deviceRemoteModel != null) {
 			try {
 				Class<?> clazz = _deviceRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setPlatform", String.class);
+				Method method = clazz.getMethod("setToken", String.class);
 
-				method.invoke(_deviceRemoteModel, platform);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public long getRegisterDate() {
-		return _registerDate;
-	}
-
-	@Override
-	public void setRegisterDate(long registerDate) {
-		_registerDate = registerDate;
-
-		if (_deviceRemoteModel != null) {
-			try {
-				Class<?> clazz = _deviceRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setRegisterDate", long.class);
-
-				method.invoke(_deviceRemoteModel, registerDate);
+				method.invoke(_deviceRemoteModel, token);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -312,18 +282,25 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 
 		clone.setDeviceId(getDeviceId());
 		clone.setUserId(getUserId());
-		clone.setApplicationName(getApplicationName());
-		clone.setPlatform(getPlatform());
-		clone.setRegisterDate(getRegisterDate());
+		clone.setCreateDate(getCreateDate());
+		clone.setToken(getToken());
 
 		return clone;
 	}
 
 	@Override
 	public int compareTo(Device device) {
-		String primaryKey = device.getPrimaryKey();
+		long primaryKey = device.getPrimaryKey();
 
-		return getPrimaryKey().compareTo(primaryKey);
+		if (getPrimaryKey() < primaryKey) {
+			return -1;
+		}
+		else if (getPrimaryKey() > primaryKey) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -338,9 +315,9 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 
 		DeviceClp device = (DeviceClp)obj;
 
-		String primaryKey = device.getPrimaryKey();
+		long primaryKey = device.getPrimaryKey();
 
-		if (getPrimaryKey().equals(primaryKey)) {
+		if (getPrimaryKey() == primaryKey) {
 			return true;
 		}
 		else {
@@ -350,23 +327,21 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey().hashCode();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{deviceId=");
 		sb.append(getDeviceId());
 		sb.append(", userId=");
 		sb.append(getUserId());
-		sb.append(", applicationName=");
-		sb.append(getApplicationName());
-		sb.append(", platform=");
-		sb.append(getPlatform());
-		sb.append(", registerDate=");
-		sb.append(getRegisterDate());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
+		sb.append(", token=");
+		sb.append(getToken());
 		sb.append("}");
 
 		return sb.toString();
@@ -374,7 +349,7 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.mobile.pushnotifications.model.Device");
@@ -389,16 +364,12 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>applicationName</column-name><column-value><![CDATA[");
-		sb.append(getApplicationName());
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>platform</column-name><column-value><![CDATA[");
-		sb.append(getPlatform());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>registerDate</column-name><column-value><![CDATA[");
-		sb.append(getRegisterDate());
+			"<column><column-name>token</column-name><column-value><![CDATA[");
+		sb.append(getToken());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -406,11 +377,10 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 		return sb.toString();
 	}
 
-	private String _deviceId;
+	private long _deviceId;
 	private long _userId;
 	private String _userUuid;
-	private String _applicationName;
-	private String _platform;
-	private long _registerDate;
+	private Date _createDate;
+	private String _token;
 	private BaseModel<?> _deviceRemoteModel;
 }

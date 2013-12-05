@@ -51,7 +51,7 @@ public class DeviceLocalServiceWrapper implements DeviceLocalService,
 	*/
 	@Override
 	public com.liferay.mobile.pushnotifications.model.Device createDevice(
-		java.lang.String deviceId) {
+		long deviceId) {
 		return _deviceLocalService.createDevice(deviceId);
 	}
 
@@ -65,7 +65,7 @@ public class DeviceLocalServiceWrapper implements DeviceLocalService,
 	*/
 	@Override
 	public com.liferay.mobile.pushnotifications.model.Device deleteDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _deviceLocalService.deleteDevice(deviceId);
@@ -183,7 +183,7 @@ public class DeviceLocalServiceWrapper implements DeviceLocalService,
 
 	@Override
 	public com.liferay.mobile.pushnotifications.model.Device fetchDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _deviceLocalService.fetchDevice(deviceId);
 	}
@@ -198,7 +198,7 @@ public class DeviceLocalServiceWrapper implements DeviceLocalService,
 	*/
 	@Override
 	public com.liferay.mobile.pushnotifications.model.Device getDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _deviceLocalService.getDevice(deviceId);
@@ -285,9 +285,23 @@ public class DeviceLocalServiceWrapper implements DeviceLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUser(
+	public void addDevice(long userId, java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_deviceLocalService.addDevice(userId, token);
+	}
+
+	@Override
+	public void deleteDevice(long userId, java.lang.String token)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_deviceLocalService.deleteDevice(userId, token);
+	}
+
+	@Override
+	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> getUserDevices(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
-		return _deviceLocalService.findByUser(userId);
+		return _deviceLocalService.getUserDevices(userId);
 	}
 
 	/**

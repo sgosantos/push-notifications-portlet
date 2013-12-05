@@ -59,7 +59,7 @@ public class DeviceLocalServiceUtil {
 	* @return the new device
 	*/
 	public static com.liferay.mobile.pushnotifications.model.Device createDevice(
-		java.lang.String deviceId) {
+		long deviceId) {
 		return getService().createDevice(deviceId);
 	}
 
@@ -72,7 +72,7 @@ public class DeviceLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.mobile.pushnotifications.model.Device deleteDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().deleteDevice(deviceId);
@@ -182,7 +182,7 @@ public class DeviceLocalServiceUtil {
 	}
 
 	public static com.liferay.mobile.pushnotifications.model.Device fetchDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchDevice(deviceId);
 	}
@@ -196,7 +196,7 @@ public class DeviceLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.mobile.pushnotifications.model.Device getDevice(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getDevice(deviceId);
@@ -275,9 +275,21 @@ public class DeviceLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUser(
+	public static void addDevice(long userId, java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().addDevice(userId, token);
+	}
+
+	public static void deleteDevice(long userId, java.lang.String token)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteDevice(userId, token);
+	}
+
+	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> getUserDevices(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().findByUser(userId);
+		return getService().getUserDevices(userId);
 	}
 
 	public static void clearService() {

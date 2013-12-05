@@ -83,7 +83,7 @@ public abstract class DeviceLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the new device
 	 */
 	@Override
-	public Device createDevice(String deviceId) {
+	public Device createDevice(long deviceId) {
 		return devicePersistence.create(deviceId);
 	}
 
@@ -97,7 +97,7 @@ public abstract class DeviceLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Device deleteDevice(String deviceId)
+	public Device deleteDevice(long deviceId)
 		throws PortalException, SystemException {
 		return devicePersistence.remove(deviceId);
 	}
@@ -207,7 +207,7 @@ public abstract class DeviceLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
-	public Device fetchDevice(String deviceId) throws SystemException {
+	public Device fetchDevice(long deviceId) throws SystemException {
 		return devicePersistence.fetchByPrimaryKey(deviceId);
 	}
 
@@ -220,7 +220,7 @@ public abstract class DeviceLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device getDevice(String deviceId)
+	public Device getDevice(long deviceId)
 		throws PortalException, SystemException {
 		return devicePersistence.findByPrimaryKey(deviceId);
 	}

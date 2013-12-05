@@ -25,6 +25,7 @@ import java.util.List;
 
 /**
  * @author Silvio Santos
+ * @author Bruno Farache
  */
 public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 

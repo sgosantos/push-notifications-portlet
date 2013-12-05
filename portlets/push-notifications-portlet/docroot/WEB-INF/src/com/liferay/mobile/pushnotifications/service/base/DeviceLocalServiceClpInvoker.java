@@ -32,11 +32,11 @@ public class DeviceLocalServiceClpInvoker {
 
 		_methodName1 = "createDevice";
 
-		_methodParameterTypes1 = new String[] { "java.lang.String" };
+		_methodParameterTypes1 = new String[] { "long" };
 
 		_methodName2 = "deleteDevice";
 
-		_methodParameterTypes2 = new String[] { "java.lang.String" };
+		_methodParameterTypes2 = new String[] { "long" };
 
 		_methodName3 = "deleteDevice";
 
@@ -82,11 +82,11 @@ public class DeviceLocalServiceClpInvoker {
 
 		_methodName10 = "fetchDevice";
 
-		_methodParameterTypes10 = new String[] { "java.lang.String" };
+		_methodParameterTypes10 = new String[] { "long" };
 
 		_methodName11 = "getDevice";
 
-		_methodParameterTypes11 = new String[] { "java.lang.String" };
+		_methodParameterTypes11 = new String[] { "long" };
 
 		_methodName12 = "getPersistedModel";
 
@@ -114,9 +114,17 @@ public class DeviceLocalServiceClpInvoker {
 
 		_methodParameterTypes35 = new String[] { "java.lang.String" };
 
-		_methodName40 = "findByUser";
+		_methodName40 = "addDevice";
 
-		_methodParameterTypes40 = new String[] { "long" };
+		_methodParameterTypes40 = new String[] { "long", "java.lang.String" };
+
+		_methodName41 = "deleteDevice";
+
+		_methodParameterTypes41 = new String[] { "long", "java.lang.String" };
+
+		_methodName42 = "getUserDevices";
+
+		_methodParameterTypes42 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -128,12 +136,12 @@ public class DeviceLocalServiceClpInvoker {
 
 		if (_methodName1.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-			return DeviceLocalServiceUtil.createDevice((java.lang.String)arguments[0]);
+			return DeviceLocalServiceUtil.createDevice(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName2.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-			return DeviceLocalServiceUtil.deleteDevice((java.lang.String)arguments[0]);
+			return DeviceLocalServiceUtil.deleteDevice(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName3.equals(name) &&
@@ -179,12 +187,12 @@ public class DeviceLocalServiceClpInvoker {
 
 		if (_methodName10.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-			return DeviceLocalServiceUtil.fetchDevice((java.lang.String)arguments[0]);
+			return DeviceLocalServiceUtil.fetchDevice(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName11.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-			return DeviceLocalServiceUtil.getDevice((java.lang.String)arguments[0]);
+			return DeviceLocalServiceUtil.getDevice(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName12.equals(name) &&
@@ -222,7 +230,23 @@ public class DeviceLocalServiceClpInvoker {
 
 		if (_methodName40.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
-			return DeviceLocalServiceUtil.findByUser(((Long)arguments[0]).longValue());
+			DeviceLocalServiceUtil.addDevice(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
+
+			return null;
+		}
+
+		if (_methodName41.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
+			DeviceLocalServiceUtil.deleteDevice(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
+
+			return null;
+		}
+
+		if (_methodName42.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+			return DeviceLocalServiceUtil.getUserDevices(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -266,4 +290,8 @@ public class DeviceLocalServiceClpInvoker {
 	private String[] _methodParameterTypes35;
 	private String _methodName40;
 	private String[] _methodParameterTypes40;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
 }

@@ -17,6 +17,7 @@ package com.liferay.mobile.pushnotifications.model;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,16 +51,15 @@ public class DeviceWrapper implements Device, ModelWrapper<Device> {
 
 		attributes.put("deviceId", getDeviceId());
 		attributes.put("userId", getUserId());
-		attributes.put("applicationName", getApplicationName());
-		attributes.put("platform", getPlatform());
-		attributes.put("registerDate", getRegisterDate());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("token", getToken());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String deviceId = (String)attributes.get("deviceId");
+		Long deviceId = (Long)attributes.get("deviceId");
 
 		if (deviceId != null) {
 			setDeviceId(deviceId);
@@ -71,22 +71,16 @@ public class DeviceWrapper implements Device, ModelWrapper<Device> {
 			setUserId(userId);
 		}
 
-		String applicationName = (String)attributes.get("applicationName");
+		Date createDate = (Date)attributes.get("createDate");
 
-		if (applicationName != null) {
-			setApplicationName(applicationName);
+		if (createDate != null) {
+			setCreateDate(createDate);
 		}
 
-		String platform = (String)attributes.get("platform");
+		String token = (String)attributes.get("token");
 
-		if (platform != null) {
-			setPlatform(platform);
-		}
-
-		Long registerDate = (Long)attributes.get("registerDate");
-
-		if (registerDate != null) {
-			setRegisterDate(registerDate);
+		if (token != null) {
+			setToken(token);
 		}
 	}
 
@@ -96,7 +90,7 @@ public class DeviceWrapper implements Device, ModelWrapper<Device> {
 	* @return the primary key of this device
 	*/
 	@Override
-	public java.lang.String getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _device.getPrimaryKey();
 	}
 
@@ -106,7 +100,7 @@ public class DeviceWrapper implements Device, ModelWrapper<Device> {
 	* @param primaryKey the primary key of this device
 	*/
 	@Override
-	public void setPrimaryKey(java.lang.String primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		_device.setPrimaryKey(primaryKey);
 	}
 
@@ -116,7 +110,7 @@ public class DeviceWrapper implements Device, ModelWrapper<Device> {
 	* @return the device ID of this device
 	*/
 	@Override
-	public java.lang.String getDeviceId() {
+	public long getDeviceId() {
 		return _device.getDeviceId();
 	}
 
@@ -126,7 +120,7 @@ public class DeviceWrapper implements Device, ModelWrapper<Device> {
 	* @param deviceId the device ID of this device
 	*/
 	@Override
-	public void setDeviceId(java.lang.String deviceId) {
+	public void setDeviceId(long deviceId) {
 		_device.setDeviceId(deviceId);
 	}
 
@@ -173,63 +167,43 @@ public class DeviceWrapper implements Device, ModelWrapper<Device> {
 	}
 
 	/**
-	* Returns the application name of this device.
+	* Returns the create date of this device.
 	*
-	* @return the application name of this device
+	* @return the create date of this device
 	*/
 	@Override
-	public java.lang.String getApplicationName() {
-		return _device.getApplicationName();
+	public java.util.Date getCreateDate() {
+		return _device.getCreateDate();
 	}
 
 	/**
-	* Sets the application name of this device.
+	* Sets the create date of this device.
 	*
-	* @param applicationName the application name of this device
+	* @param createDate the create date of this device
 	*/
 	@Override
-	public void setApplicationName(java.lang.String applicationName) {
-		_device.setApplicationName(applicationName);
+	public void setCreateDate(java.util.Date createDate) {
+		_device.setCreateDate(createDate);
 	}
 
 	/**
-	* Returns the platform of this device.
+	* Returns the token of this device.
 	*
-	* @return the platform of this device
+	* @return the token of this device
 	*/
 	@Override
-	public java.lang.String getPlatform() {
-		return _device.getPlatform();
+	public java.lang.String getToken() {
+		return _device.getToken();
 	}
 
 	/**
-	* Sets the platform of this device.
+	* Sets the token of this device.
 	*
-	* @param platform the platform of this device
+	* @param token the token of this device
 	*/
 	@Override
-	public void setPlatform(java.lang.String platform) {
-		_device.setPlatform(platform);
-	}
-
-	/**
-	* Returns the register date of this device.
-	*
-	* @return the register date of this device
-	*/
-	@Override
-	public long getRegisterDate() {
-		return _device.getRegisterDate();
-	}
-
-	/**
-	* Sets the register date of this device.
-	*
-	* @param registerDate the register date of this device
-	*/
-	@Override
-	public void setRegisterDate(long registerDate) {
-		_device.setRegisterDate(registerDate);
+	public void setToken(java.lang.String token) {
+		_device.setToken(token);
 	}
 
 	@Override

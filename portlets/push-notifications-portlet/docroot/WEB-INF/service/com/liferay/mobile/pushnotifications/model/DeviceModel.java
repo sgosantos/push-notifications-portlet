@@ -24,6 +24,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * The base model interface for the Device service. Represents a row in the &quot;PushNotifications_Device&quot; database table, with each column mapped to a property of this class.
  *
@@ -49,29 +51,28 @@ public interface DeviceModel extends BaseModel<Device> {
 	 *
 	 * @return the primary key of this device
 	 */
-	public String getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this device.
 	 *
 	 * @param primaryKey the primary key of this device
 	 */
-	public void setPrimaryKey(String primaryKey);
+	public void setPrimaryKey(long primaryKey);
 
 	/**
 	 * Returns the device ID of this device.
 	 *
 	 * @return the device ID of this device
 	 */
-	@AutoEscape
-	public String getDeviceId();
+	public long getDeviceId();
 
 	/**
 	 * Sets the device ID of this device.
 	 *
 	 * @param deviceId the device ID of this device
 	 */
-	public void setDeviceId(String deviceId);
+	public void setDeviceId(long deviceId);
 
 	/**
 	 * Returns the user ID of this device.
@@ -103,48 +104,33 @@ public interface DeviceModel extends BaseModel<Device> {
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the application name of this device.
+	 * Returns the create date of this device.
 	 *
-	 * @return the application name of this device
+	 * @return the create date of this device
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this device.
+	 *
+	 * @param createDate the create date of this device
+	 */
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the token of this device.
+	 *
+	 * @return the token of this device
 	 */
 	@AutoEscape
-	public String getApplicationName();
+	public String getToken();
 
 	/**
-	 * Sets the application name of this device.
+	 * Sets the token of this device.
 	 *
-	 * @param applicationName the application name of this device
+	 * @param token the token of this device
 	 */
-	public void setApplicationName(String applicationName);
-
-	/**
-	 * Returns the platform of this device.
-	 *
-	 * @return the platform of this device
-	 */
-	@AutoEscape
-	public String getPlatform();
-
-	/**
-	 * Sets the platform of this device.
-	 *
-	 * @param platform the platform of this device
-	 */
-	public void setPlatform(String platform);
-
-	/**
-	 * Returns the register date of this device.
-	 *
-	 * @return the register date of this device
-	 */
-	public long getRegisterDate();
-
-	/**
-	 * Sets the register date of this device.
-	 *
-	 * @param registerDate the register date of this device
-	 */
-	public void setRegisterDate(long registerDate);
+	public void setToken(String token);
 
 	@Override
 	public boolean isNew();

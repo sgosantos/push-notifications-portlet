@@ -115,9 +115,9 @@ public class DeviceUtil {
 	* @return the matching devices
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUser(
+	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUserId(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUser(userId);
+		return getPersistence().findByUserId(userId);
 	}
 
 	/**
@@ -133,10 +133,10 @@ public class DeviceUtil {
 	* @return the range of matching devices
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUser(
+	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUserId(
 		long userId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUser(userId, start, end);
+		return getPersistence().findByUserId(userId, start, end);
 	}
 
 	/**
@@ -153,11 +153,12 @@ public class DeviceUtil {
 	* @return the ordered range of matching devices
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUser(
+	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUserId(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUser(userId, start, end, orderByComparator);
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -169,12 +170,12 @@ public class DeviceUtil {
 	* @throws com.liferay.mobile.pushnotifications.NoSuchDeviceException if a matching device could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.mobile.pushnotifications.model.Device findByUser_First(
+	public static com.liferay.mobile.pushnotifications.model.Device findByUserId_First(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUser_First(userId, orderByComparator);
+		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
 	/**
@@ -185,11 +186,11 @@ public class DeviceUtil {
 	* @return the first matching device, or <code>null</code> if a matching device could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.mobile.pushnotifications.model.Device fetchByUser_First(
+	public static com.liferay.mobile.pushnotifications.model.Device fetchByUserId_First(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByUser_First(userId, orderByComparator);
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
 	/**
@@ -201,12 +202,12 @@ public class DeviceUtil {
 	* @throws com.liferay.mobile.pushnotifications.NoSuchDeviceException if a matching device could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.mobile.pushnotifications.model.Device findByUser_Last(
+	public static com.liferay.mobile.pushnotifications.model.Device findByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUser_Last(userId, orderByComparator);
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
@@ -217,11 +218,11 @@ public class DeviceUtil {
 	* @return the last matching device, or <code>null</code> if a matching device could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.mobile.pushnotifications.model.Device fetchByUser_Last(
+	public static com.liferay.mobile.pushnotifications.model.Device fetchByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByUser_Last(userId, orderByComparator);
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
 	/**
@@ -234,13 +235,13 @@ public class DeviceUtil {
 	* @throws com.liferay.mobile.pushnotifications.NoSuchDeviceException if a device with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.mobile.pushnotifications.model.Device[] findByUser_PrevAndNext(
-		java.lang.String deviceId, long userId,
+	public static com.liferay.mobile.pushnotifications.model.Device[] findByUserId_PrevAndNext(
+		long deviceId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByUser_PrevAndNext(deviceId, userId, orderByComparator);
+				   .findByUserId_PrevAndNext(deviceId, userId, orderByComparator);
 	}
 
 	/**
@@ -249,9 +250,9 @@ public class DeviceUtil {
 	* @param userId the user ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUser(long userId)
+	public static void removeByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUser(userId);
+		getPersistence().removeByUserId(userId);
 	}
 
 	/**
@@ -261,9 +262,77 @@ public class DeviceUtil {
 	* @return the number of matching devices
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUser(long userId)
+	public static int countByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUser(userId);
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
+	* Returns the device where token = &#63; or throws a {@link com.liferay.mobile.pushnotifications.NoSuchDeviceException} if it could not be found.
+	*
+	* @param token the token
+	* @return the matching device
+	* @throws com.liferay.mobile.pushnotifications.NoSuchDeviceException if a matching device could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.mobile.pushnotifications.model.Device findByToken(
+		java.lang.String token)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByToken(token);
+	}
+
+	/**
+	* Returns the device where token = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param token the token
+	* @return the matching device, or <code>null</code> if a matching device could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.mobile.pushnotifications.model.Device fetchByToken(
+		java.lang.String token)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByToken(token);
+	}
+
+	/**
+	* Returns the device where token = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param token the token
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching device, or <code>null</code> if a matching device could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.mobile.pushnotifications.model.Device fetchByToken(
+		java.lang.String token, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByToken(token, retrieveFromCache);
+	}
+
+	/**
+	* Removes the device where token = &#63; from the database.
+	*
+	* @param token the token
+	* @return the device that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.mobile.pushnotifications.model.Device removeByToken(
+		java.lang.String token)
+		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByToken(token);
+	}
+
+	/**
+	* Returns the number of devices where token = &#63;.
+	*
+	* @param token the token
+	* @return the number of matching devices
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByToken(java.lang.String token)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByToken(token);
 	}
 
 	/**
@@ -293,7 +362,7 @@ public class DeviceUtil {
 	* @return the new device
 	*/
 	public static com.liferay.mobile.pushnotifications.model.Device create(
-		java.lang.String deviceId) {
+		long deviceId) {
 		return getPersistence().create(deviceId);
 	}
 
@@ -306,7 +375,7 @@ public class DeviceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.mobile.pushnotifications.model.Device remove(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().remove(deviceId);
@@ -327,7 +396,7 @@ public class DeviceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.mobile.pushnotifications.model.Device findByPrimaryKey(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().findByPrimaryKey(deviceId);
@@ -341,7 +410,7 @@ public class DeviceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.mobile.pushnotifications.model.Device fetchByPrimaryKey(
-		java.lang.String deviceId)
+		long deviceId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByPrimaryKey(deviceId);
 	}

@@ -63,17 +63,16 @@ public class DeviceServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static void registerDevice(java.lang.String deviceId,
-		java.lang.String applicationName, java.lang.String platform)
+	public static void addDevice(java.lang.String deviceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().registerDevice(deviceId, applicationName, platform);
+		getService().addDevice(deviceId);
 	}
 
-	public static void unregisterDevice(java.lang.String deviceId)
+	public static void deleteDevice(java.lang.String token)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().unregisterDevice(deviceId);
+		getService().deleteDevice(token);
 	}
 
 	public static void clearService() {

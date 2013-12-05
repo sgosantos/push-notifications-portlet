@@ -12,30 +12,26 @@
  * details.
  */
 
-package com.liferay.mobile.pushnotifications.service.impl;
+package com.liferay.mobile.pushnotifications.service.persistence;
 
-import com.liferay.mobile.pushnotifications.service.base.DeviceServiceBaseImpl;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.mobile.pushnotifications.model.Device;
+import com.liferay.mobile.pushnotifications.service.DeviceLocalServiceUtil;
+
+import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Silvio Santos
- * @author Bruno Farache
+ * @generated
  */
-public class DeviceServiceImpl extends DeviceServiceBaseImpl {
+public abstract class DeviceActionableDynamicQuery
+	extends BaseActionableDynamicQuery {
+	public DeviceActionableDynamicQuery() throws SystemException {
+		setBaseLocalService(DeviceLocalServiceUtil.getService());
+		setClass(Device.class);
 
-	@Override
-	public void addDevice(String deviceId)
-		throws PortalException, SystemException {
+		setClassLoader(com.liferay.mobile.pushnotifications.service.ClpSerializer.class.getClassLoader());
 
-		deviceLocalService.addDevice(getUserId(), deviceId);
+		setPrimaryKeyPropertyName("deviceId");
 	}
-
-	@Override
-	public void deleteDevice(String token)
-		throws PortalException, SystemException {
-
-		deviceLocalService.deleteDevice(getUserId(), token);
-	}
-
 }

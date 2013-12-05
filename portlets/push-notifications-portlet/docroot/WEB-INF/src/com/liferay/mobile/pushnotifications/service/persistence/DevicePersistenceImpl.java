@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -82,23 +83,24 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 			DeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USER = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 			DeviceModelImpl.FINDER_CACHE_ENABLED, DeviceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUser",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USER = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID =
+		new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 			DeviceModelImpl.FINDER_CACHE_ENABLED, DeviceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUser",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] { Long.class.getName() },
 			DeviceModelImpl.USERID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_USER = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 			DeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUser",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] { Long.class.getName() });
 
 	/**
@@ -109,8 +111,8 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Device> findByUser(long userId) throws SystemException {
-		return findByUser(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<Device> findByUserId(long userId) throws SystemException {
+		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -127,9 +129,9 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Device> findByUser(long userId, int start, int end)
+	public List<Device> findByUserId(long userId, int start, int end)
 		throws SystemException {
-		return findByUser(userId, start, end, null);
+		return findByUserId(userId, start, end, null);
 	}
 
 	/**
@@ -147,7 +149,7 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Device> findByUser(long userId, int start, int end,
+	public List<Device> findByUserId(long userId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -156,11 +158,11 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USER;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID;
 			finderArgs = new Object[] { userId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_USER;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID;
 			finderArgs = new Object[] { userId, start, end, orderByComparator };
 		}
 
@@ -190,7 +192,7 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 			query.append(_SQL_SELECT_DEVICE_WHERE);
 
-			query.append(_FINDER_COLUMN_USER_USERID_2);
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -254,10 +256,10 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device findByUser_First(long userId,
+	public Device findByUserId_First(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchDeviceException, SystemException {
-		Device device = fetchByUser_First(userId, orderByComparator);
+		Device device = fetchByUserId_First(userId, orderByComparator);
 
 		if (device != null) {
 			return device;
@@ -284,9 +286,9 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device fetchByUser_First(long userId,
+	public Device fetchByUserId_First(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Device> list = findByUser(userId, 0, 1, orderByComparator);
+		List<Device> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -305,10 +307,10 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device findByUser_Last(long userId,
+	public Device findByUserId_Last(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchDeviceException, SystemException {
-		Device device = fetchByUser_Last(userId, orderByComparator);
+		Device device = fetchByUserId_Last(userId, orderByComparator);
 
 		if (device != null) {
 			return device;
@@ -335,15 +337,15 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device fetchByUser_Last(long userId,
+	public Device fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByUser(userId);
+		int count = countByUserId(userId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Device> list = findByUser(userId, count - 1, count,
+		List<Device> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -364,7 +366,7 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device[] findByUser_PrevAndNext(String deviceId, long userId,
+	public Device[] findByUserId_PrevAndNext(long deviceId, long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchDeviceException, SystemException {
 		Device device = findByPrimaryKey(deviceId);
@@ -376,12 +378,12 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 			Device[] array = new DeviceImpl[3];
 
-			array[0] = getByUser_PrevAndNext(session, device, userId,
+			array[0] = getByUserId_PrevAndNext(session, device, userId,
 					orderByComparator, true);
 
 			array[1] = device;
 
-			array[2] = getByUser_PrevAndNext(session, device, userId,
+			array[2] = getByUserId_PrevAndNext(session, device, userId,
 					orderByComparator, false);
 
 			return array;
@@ -394,7 +396,7 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 		}
 	}
 
-	protected Device getByUser_PrevAndNext(Session session, Device device,
+	protected Device getByUserId_PrevAndNext(Session session, Device device,
 		long userId, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -408,7 +410,7 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 		query.append(_SQL_SELECT_DEVICE_WHERE);
 
-		query.append(_FINDER_COLUMN_USER_USERID_2);
+		query.append(_FINDER_COLUMN_USERID_USERID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -505,8 +507,8 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUser(long userId) throws SystemException {
-		for (Device device : findByUser(userId, QueryUtil.ALL_POS,
+	public void removeByUserId(long userId) throws SystemException {
+		for (Device device : findByUserId(userId, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(device);
 		}
@@ -520,8 +522,8 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUser(long userId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_USER;
+	public int countByUserId(long userId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID;
 
 		Object[] finderArgs = new Object[] { userId };
 
@@ -533,7 +535,7 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 			query.append(_SQL_COUNT_DEVICE_WHERE);
 
-			query.append(_FINDER_COLUMN_USER_USERID_2);
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
 
 			String sql = query.toString();
 
@@ -565,7 +567,248 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_USER_USERID_2 = "device.userId = ?";
+	private static final String _FINDER_COLUMN_USERID_USERID_2 = "device.userId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_TOKEN = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
+			DeviceModelImpl.FINDER_CACHE_ENABLED, DeviceImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByToken",
+			new String[] { String.class.getName() },
+			DeviceModelImpl.TOKEN_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_TOKEN = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
+			DeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToken",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns the device where token = &#63; or throws a {@link com.liferay.mobile.pushnotifications.NoSuchDeviceException} if it could not be found.
+	 *
+	 * @param token the token
+	 * @return the matching device
+	 * @throws com.liferay.mobile.pushnotifications.NoSuchDeviceException if a matching device could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Device findByToken(String token)
+		throws NoSuchDeviceException, SystemException {
+		Device device = fetchByToken(token);
+
+		if (device == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("token=");
+			msg.append(token);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchDeviceException(msg.toString());
+		}
+
+		return device;
+	}
+
+	/**
+	 * Returns the device where token = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param token the token
+	 * @return the matching device, or <code>null</code> if a matching device could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Device fetchByToken(String token) throws SystemException {
+		return fetchByToken(token, true);
+	}
+
+	/**
+	 * Returns the device where token = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param token the token
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching device, or <code>null</code> if a matching device could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Device fetchByToken(String token, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { token };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_TOKEN,
+					finderArgs, this);
+		}
+
+		if (result instanceof Device) {
+			Device device = (Device)result;
+
+			if (!Validator.equals(token, device.getToken())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_DEVICE_WHERE);
+
+			boolean bindToken = false;
+
+			if (token == null) {
+				query.append(_FINDER_COLUMN_TOKEN_TOKEN_1);
+			}
+			else if (token.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_TOKEN_TOKEN_3);
+			}
+			else {
+				bindToken = true;
+
+				query.append(_FINDER_COLUMN_TOKEN_TOKEN_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindToken) {
+					qPos.add(token);
+				}
+
+				List<Device> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TOKEN,
+						finderArgs, list);
+				}
+				else {
+					Device device = list.get(0);
+
+					result = device;
+
+					cacheResult(device);
+
+					if ((device.getToken() == null) ||
+							!device.getToken().equals(token)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TOKEN,
+							finderArgs, device);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_TOKEN,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Device)result;
+		}
+	}
+
+	/**
+	 * Removes the device where token = &#63; from the database.
+	 *
+	 * @param token the token
+	 * @return the device that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Device removeByToken(String token)
+		throws NoSuchDeviceException, SystemException {
+		Device device = findByToken(token);
+
+		return remove(device);
+	}
+
+	/**
+	 * Returns the number of devices where token = &#63;.
+	 *
+	 * @param token the token
+	 * @return the number of matching devices
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByToken(String token) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_TOKEN;
+
+		Object[] finderArgs = new Object[] { token };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_DEVICE_WHERE);
+
+			boolean bindToken = false;
+
+			if (token == null) {
+				query.append(_FINDER_COLUMN_TOKEN_TOKEN_1);
+			}
+			else if (token.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_TOKEN_TOKEN_3);
+			}
+			else {
+				bindToken = true;
+
+				query.append(_FINDER_COLUMN_TOKEN_TOKEN_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindToken) {
+					qPos.add(token);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_TOKEN_TOKEN_1 = "device.token IS NULL";
+	private static final String _FINDER_COLUMN_TOKEN_TOKEN_2 = "device.token = ?";
+	private static final String _FINDER_COLUMN_TOKEN_TOKEN_3 = "(device.token IS NULL OR device.token = '')";
 
 	public DevicePersistenceImpl() {
 		setModelClass(Device.class);
@@ -580,6 +823,9 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	public void cacheResult(Device device) {
 		EntityCacheUtil.putResult(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 			DeviceImpl.class, device.getPrimaryKey(), device);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TOKEN,
+			new Object[] { device.getToken() }, device);
 
 		device.resetOriginalValues();
 	}
@@ -637,6 +883,8 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(device);
 	}
 
 	@Override
@@ -647,6 +895,48 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 		for (Device device : devices) {
 			EntityCacheUtil.removeResult(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 				DeviceImpl.class, device.getPrimaryKey());
+
+			clearUniqueFindersCache(device);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(Device device) {
+		if (device.isNew()) {
+			Object[] args = new Object[] { device.getToken() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_TOKEN, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TOKEN, args, device);
+		}
+		else {
+			DeviceModelImpl deviceModelImpl = (DeviceModelImpl)device;
+
+			if ((deviceModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_TOKEN.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { device.getToken() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_TOKEN, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TOKEN, args,
+					device);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(Device device) {
+		DeviceModelImpl deviceModelImpl = (DeviceModelImpl)device;
+
+		Object[] args = new Object[] { device.getToken() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TOKEN, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_TOKEN, args);
+
+		if ((deviceModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_TOKEN.getColumnBitmask()) != 0) {
+			args = new Object[] { deviceModelImpl.getOriginalToken() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TOKEN, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_TOKEN, args);
 		}
 	}
 
@@ -657,7 +947,7 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @return the new device
 	 */
 	@Override
-	public Device create(String deviceId) {
+	public Device create(long deviceId) {
 		Device device = new DeviceImpl();
 
 		device.setNew(true);
@@ -675,7 +965,7 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device remove(String deviceId)
+	public Device remove(long deviceId)
 		throws NoSuchDeviceException, SystemException {
 		return remove((Serializable)deviceId);
 	}
@@ -791,23 +1081,26 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 		else {
 			if ((deviceModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USER.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { deviceModelImpl.getOriginalUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USER, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USER,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
 				args = new Object[] { deviceModelImpl.getUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USER, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USER,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 			}
 		}
 
 		EntityCacheUtil.putResult(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 			DeviceImpl.class, device.getPrimaryKey(), device);
+
+		clearUniqueFindersCache(device);
+		cacheUniqueFindersCache(device);
 
 		return device;
 	}
@@ -824,9 +1117,8 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 		deviceImpl.setDeviceId(device.getDeviceId());
 		deviceImpl.setUserId(device.getUserId());
-		deviceImpl.setApplicationName(device.getApplicationName());
-		deviceImpl.setPlatform(device.getPlatform());
-		deviceImpl.setRegisterDate(device.getRegisterDate());
+		deviceImpl.setCreateDate(device.getCreateDate());
+		deviceImpl.setToken(device.getToken());
 
 		return deviceImpl;
 	}
@@ -865,7 +1157,7 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device findByPrimaryKey(String deviceId)
+	public Device findByPrimaryKey(long deviceId)
 		throws NoSuchDeviceException, SystemException {
 		return findByPrimaryKey((Serializable)deviceId);
 	}
@@ -925,7 +1217,7 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device fetchByPrimaryKey(String deviceId) throws SystemException {
+	public Device fetchByPrimaryKey(long deviceId) throws SystemException {
 		return fetchByPrimaryKey((Serializable)deviceId);
 	}
 

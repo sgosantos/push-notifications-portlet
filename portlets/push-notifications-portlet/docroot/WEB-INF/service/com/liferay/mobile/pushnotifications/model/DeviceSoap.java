@@ -17,6 +17,7 @@ package com.liferay.mobile.pushnotifications.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,9 +33,8 @@ public class DeviceSoap implements Serializable {
 
 		soapModel.setDeviceId(model.getDeviceId());
 		soapModel.setUserId(model.getUserId());
-		soapModel.setApplicationName(model.getApplicationName());
-		soapModel.setPlatform(model.getPlatform());
-		soapModel.setRegisterDate(model.getRegisterDate());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setToken(model.getToken());
 
 		return soapModel;
 	}
@@ -79,19 +79,19 @@ public class DeviceSoap implements Serializable {
 	public DeviceSoap() {
 	}
 
-	public String getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _deviceId;
 	}
 
-	public void setPrimaryKey(String pk) {
+	public void setPrimaryKey(long pk) {
 		setDeviceId(pk);
 	}
 
-	public String getDeviceId() {
+	public long getDeviceId() {
 		return _deviceId;
 	}
 
-	public void setDeviceId(String deviceId) {
+	public void setDeviceId(long deviceId) {
 		_deviceId = deviceId;
 	}
 
@@ -103,33 +103,24 @@ public class DeviceSoap implements Serializable {
 		_userId = userId;
 	}
 
-	public String getApplicationName() {
-		return _applicationName;
+	public Date getCreateDate() {
+		return _createDate;
 	}
 
-	public void setApplicationName(String applicationName) {
-		_applicationName = applicationName;
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
 	}
 
-	public String getPlatform() {
-		return _platform;
+	public String getToken() {
+		return _token;
 	}
 
-	public void setPlatform(String platform) {
-		_platform = platform;
+	public void setToken(String token) {
+		_token = token;
 	}
 
-	public long getRegisterDate() {
-		return _registerDate;
-	}
-
-	public void setRegisterDate(long registerDate) {
-		_registerDate = registerDate;
-	}
-
-	private String _deviceId;
+	private long _deviceId;
 	private long _userId;
-	private String _applicationName;
-	private String _platform;
-	private long _registerDate;
+	private Date _createDate;
+	private String _token;
 }
