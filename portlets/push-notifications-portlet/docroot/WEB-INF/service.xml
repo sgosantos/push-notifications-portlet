@@ -21,8 +21,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="User" return-type="Collection">
+		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
+		</finder>
+		<finder name="Token" return-type="Device" unique="true">
+			<finder-column name="token" />
 		</finder>
 	</entity>
 </service-builder>

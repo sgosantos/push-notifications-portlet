@@ -30,4 +30,11 @@ public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 		deviceLocalService.addDevice(getUserId(), deviceId);
 	}
 
+	@Override
+	public void deleteDevice(String token)
+		throws PortalException, SystemException {
+
+		deviceLocalService.deleteDevice(getUserId(), token);
+	}
+
 }

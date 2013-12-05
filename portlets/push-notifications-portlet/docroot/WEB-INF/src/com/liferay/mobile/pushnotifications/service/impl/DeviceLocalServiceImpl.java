@@ -14,6 +14,7 @@
 
 package com.liferay.mobile.pushnotifications.service.impl;
 
+import com.liferay.mobile.pushnotifications.NoSuchDeviceException;
 import com.liferay.mobile.pushnotifications.model.Device;
 import com.liferay.mobile.pushnotifications.service.base.DeviceLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,8 +44,19 @@ public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteDevice(long userId, String token)
+		throws NoSuchDeviceException, SystemException {
+
+		Device device = devicePersistence.findByToken(token);
+
+		if (userId == device.getUserId()) {
+			devicePersistence.remove(device);
+		}
+	}
+
+	@Override
 	public List<Device> getUserDevices(long userId) throws SystemException {
-		return devicePersistence.findByUser(userId);
+		return devicePersistence.findByUserId(userId);
 	}
 
 }
