@@ -19,7 +19,6 @@ import com.liferay.mobile.pushnotifications.model.impl.DeviceImpl;
 import com.liferay.mobile.pushnotifications.service.base.DeviceServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.User;
 
 import java.util.Date;
 
@@ -29,26 +28,16 @@ import java.util.Date;
 public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 
 	@Override
-	public void registerDevice(
-			String deviceId, String applicationName, String platform)
+	public void addDevice(long userId, String deviceId)
 		throws PortalException, SystemException {
 
 		Device device = new DeviceImpl();
 
-		User user = getUser();
-
+		device.setUserId(userId);
 		device.setDeviceId(deviceId);
-		device.setUserId(user.getUserId());
 		device.setCreateDate(new Date());
 
 		deviceLocalService.addDevice(device);
-	}
-
-	@Override
-	public void unregisterDevice(String deviceId)
-		throws PortalException, SystemException {
-
-		deviceLocalService.deleteDevice(deviceId);
 	}
 
 }
