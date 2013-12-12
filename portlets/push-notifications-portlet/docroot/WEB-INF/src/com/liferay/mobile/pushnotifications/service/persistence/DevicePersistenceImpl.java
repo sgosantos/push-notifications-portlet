@@ -83,65 +83,70 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 			DeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U_P = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 			DeviceModelImpl.FINDER_CACHE_ENABLED, DeviceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_P",
 			new String[] {
-				Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID =
-		new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 			DeviceModelImpl.FINDER_CACHE_ENABLED, DeviceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] { Long.class.getName() },
-			DeviceModelImpl.USERID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_P",
+			new String[] { Long.class.getName(), String.class.getName() },
+			DeviceModelImpl.USERID_COLUMN_BITMASK |
+			DeviceModelImpl.PLATFORM_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_U_P = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 			DeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] { Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_P",
+			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns all the devices where userId = &#63;.
+	 * Returns all the devices where userId = &#63; and platform = &#63;.
 	 *
 	 * @param userId the user ID
+	 * @param platform the platform
 	 * @return the matching devices
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Device> findByUserId(long userId) throws SystemException {
-		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<Device> findByU_P(long userId, String platform)
+		throws SystemException {
+		return findByU_P(userId, platform, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the devices where userId = &#63;.
+	 * Returns a range of all the devices where userId = &#63; and platform = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.mobile.pushnotifications.model.impl.DeviceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param userId the user ID
+	 * @param platform the platform
 	 * @param start the lower bound of the range of devices
 	 * @param end the upper bound of the range of devices (not inclusive)
 	 * @return the range of matching devices
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Device> findByUserId(long userId, int start, int end)
-		throws SystemException {
-		return findByUserId(userId, start, end, null);
+	public List<Device> findByU_P(long userId, String platform, int start,
+		int end) throws SystemException {
+		return findByU_P(userId, platform, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the devices where userId = &#63;.
+	 * Returns an ordered range of all the devices where userId = &#63; and platform = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.mobile.pushnotifications.model.impl.DeviceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param userId the user ID
+	 * @param platform the platform
 	 * @param start the lower bound of the range of devices
 	 * @param end the upper bound of the range of devices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -149,8 +154,8 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Device> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public List<Device> findByU_P(long userId, String platform, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -158,12 +163,16 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID;
-			finderArgs = new Object[] { userId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P;
+			finderArgs = new Object[] { userId, platform };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID;
-			finderArgs = new Object[] { userId, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_U_P;
+			finderArgs = new Object[] {
+					userId, platform,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<Device> list = (List<Device>)FinderCacheUtil.getResult(finderPath,
@@ -171,7 +180,8 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Device device : list) {
-				if ((userId != device.getUserId())) {
+				if ((userId != device.getUserId()) ||
+						!Validator.equals(platform, device.getPlatform())) {
 					list = null;
 
 					break;
@@ -183,16 +193,30 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
+				query = new StringBundler(4 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(4);
 			}
 
 			query.append(_SQL_SELECT_DEVICE_WHERE);
 
-			query.append(_FINDER_COLUMN_USERID_USERID_2);
+			query.append(_FINDER_COLUMN_U_P_USERID_2);
+
+			boolean bindPlatform = false;
+
+			if (platform == null) {
+				query.append(_FINDER_COLUMN_U_P_PLATFORM_1);
+			}
+			else if (platform.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_U_P_PLATFORM_3);
+			}
+			else {
+				bindPlatform = true;
+
+				query.append(_FINDER_COLUMN_U_P_PLATFORM_2);
+			}
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -215,6 +239,10 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(userId);
+
+				if (bindPlatform) {
+					qPos.add(platform);
+				}
 
 				if (!pagination) {
 					list = (List<Device>)QueryUtil.list(q, getDialect(), start,
@@ -247,30 +275,34 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	}
 
 	/**
-	 * Returns the first device in the ordered set where userId = &#63;.
+	 * Returns the first device in the ordered set where userId = &#63; and platform = &#63;.
 	 *
 	 * @param userId the user ID
+	 * @param platform the platform
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching device
 	 * @throws com.liferay.mobile.pushnotifications.NoSuchDeviceException if a matching device could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device findByUserId_First(long userId,
+	public Device findByU_P_First(long userId, String platform,
 		OrderByComparator orderByComparator)
 		throws NoSuchDeviceException, SystemException {
-		Device device = fetchByUserId_First(userId, orderByComparator);
+		Device device = fetchByU_P_First(userId, platform, orderByComparator);
 
 		if (device != null) {
 			return device;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(6);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("userId=");
 		msg.append(userId);
+
+		msg.append(", platform=");
+		msg.append(platform);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -278,17 +310,18 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	}
 
 	/**
-	 * Returns the first device in the ordered set where userId = &#63;.
+	 * Returns the first device in the ordered set where userId = &#63; and platform = &#63;.
 	 *
 	 * @param userId the user ID
+	 * @param platform the platform
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching device, or <code>null</code> if a matching device could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device fetchByUserId_First(long userId,
+	public Device fetchByU_P_First(long userId, String platform,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Device> list = findByUserId(userId, 0, 1, orderByComparator);
+		List<Device> list = findByU_P(userId, platform, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -298,30 +331,34 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	}
 
 	/**
-	 * Returns the last device in the ordered set where userId = &#63;.
+	 * Returns the last device in the ordered set where userId = &#63; and platform = &#63;.
 	 *
 	 * @param userId the user ID
+	 * @param platform the platform
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching device
 	 * @throws com.liferay.mobile.pushnotifications.NoSuchDeviceException if a matching device could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device findByUserId_Last(long userId,
+	public Device findByU_P_Last(long userId, String platform,
 		OrderByComparator orderByComparator)
 		throws NoSuchDeviceException, SystemException {
-		Device device = fetchByUserId_Last(userId, orderByComparator);
+		Device device = fetchByU_P_Last(userId, platform, orderByComparator);
 
 		if (device != null) {
 			return device;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(6);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("userId=");
 		msg.append(userId);
+
+		msg.append(", platform=");
+		msg.append(platform);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -329,23 +366,24 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	}
 
 	/**
-	 * Returns the last device in the ordered set where userId = &#63;.
+	 * Returns the last device in the ordered set where userId = &#63; and platform = &#63;.
 	 *
 	 * @param userId the user ID
+	 * @param platform the platform
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching device, or <code>null</code> if a matching device could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device fetchByUserId_Last(long userId,
+	public Device fetchByU_P_Last(long userId, String platform,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByUserId(userId);
+		int count = countByU_P(userId, platform);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Device> list = findByUserId(userId, count - 1, count,
+		List<Device> list = findByU_P(userId, platform, count - 1, count,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -356,18 +394,19 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	}
 
 	/**
-	 * Returns the devices before and after the current device in the ordered set where userId = &#63;.
+	 * Returns the devices before and after the current device in the ordered set where userId = &#63; and platform = &#63;.
 	 *
 	 * @param deviceId the primary key of the current device
 	 * @param userId the user ID
+	 * @param platform the platform
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next device
 	 * @throws com.liferay.mobile.pushnotifications.NoSuchDeviceException if a device with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Device[] findByUserId_PrevAndNext(long deviceId, long userId,
-		OrderByComparator orderByComparator)
+	public Device[] findByU_P_PrevAndNext(long deviceId, long userId,
+		String platform, OrderByComparator orderByComparator)
 		throws NoSuchDeviceException, SystemException {
 		Device device = findByPrimaryKey(deviceId);
 
@@ -378,12 +417,12 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 			Device[] array = new DeviceImpl[3];
 
-			array[0] = getByUserId_PrevAndNext(session, device, userId,
+			array[0] = getByU_P_PrevAndNext(session, device, userId, platform,
 					orderByComparator, true);
 
 			array[1] = device;
 
-			array[2] = getByUserId_PrevAndNext(session, device, userId,
+			array[2] = getByU_P_PrevAndNext(session, device, userId, platform,
 					orderByComparator, false);
 
 			return array;
@@ -396,8 +435,9 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 		}
 	}
 
-	protected Device getByUserId_PrevAndNext(Session session, Device device,
-		long userId, OrderByComparator orderByComparator, boolean previous) {
+	protected Device getByU_P_PrevAndNext(Session session, Device device,
+		long userId, String platform, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -410,7 +450,21 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 		query.append(_SQL_SELECT_DEVICE_WHERE);
 
-		query.append(_FINDER_COLUMN_USERID_USERID_2);
+		query.append(_FINDER_COLUMN_U_P_USERID_2);
+
+		boolean bindPlatform = false;
+
+		if (platform == null) {
+			query.append(_FINDER_COLUMN_U_P_PLATFORM_1);
+		}
+		else if (platform.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_U_P_PLATFORM_3);
+		}
+		else {
+			bindPlatform = true;
+
+			query.append(_FINDER_COLUMN_U_P_PLATFORM_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -482,6 +536,10 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 		qPos.add(userId);
 
+		if (bindPlatform) {
+			qPos.add(platform);
+		}
+
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(device);
 
@@ -501,41 +559,59 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 	}
 
 	/**
-	 * Removes all the devices where userId = &#63; from the database.
+	 * Removes all the devices where userId = &#63; and platform = &#63; from the database.
 	 *
 	 * @param userId the user ID
+	 * @param platform the platform
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUserId(long userId) throws SystemException {
-		for (Device device : findByUserId(userId, QueryUtil.ALL_POS,
+	public void removeByU_P(long userId, String platform)
+		throws SystemException {
+		for (Device device : findByU_P(userId, platform, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(device);
 		}
 	}
 
 	/**
-	 * Returns the number of devices where userId = &#63;.
+	 * Returns the number of devices where userId = &#63; and platform = &#63;.
 	 *
 	 * @param userId the user ID
+	 * @param platform the platform
 	 * @return the number of matching devices
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUserId(long userId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID;
+	public int countByU_P(long userId, String platform)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_U_P;
 
-		Object[] finderArgs = new Object[] { userId };
+		Object[] finderArgs = new Object[] { userId, platform };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_DEVICE_WHERE);
 
-			query.append(_FINDER_COLUMN_USERID_USERID_2);
+			query.append(_FINDER_COLUMN_U_P_USERID_2);
+
+			boolean bindPlatform = false;
+
+			if (platform == null) {
+				query.append(_FINDER_COLUMN_U_P_PLATFORM_1);
+			}
+			else if (platform.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_U_P_PLATFORM_3);
+			}
+			else {
+				bindPlatform = true;
+
+				query.append(_FINDER_COLUMN_U_P_PLATFORM_2);
+			}
 
 			String sql = query.toString();
 
@@ -549,6 +625,10 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(userId);
+
+				if (bindPlatform) {
+					qPos.add(platform);
+				}
 
 				count = (Long)q.uniqueResult();
 
@@ -567,7 +647,10 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_USERID_USERID_2 = "device.userId = ?";
+	private static final String _FINDER_COLUMN_U_P_USERID_2 = "device.userId = ? AND ";
+	private static final String _FINDER_COLUMN_U_P_PLATFORM_1 = "device.platform IS NULL";
+	private static final String _FINDER_COLUMN_U_P_PLATFORM_2 = "device.platform = ?";
+	private static final String _FINDER_COLUMN_U_P_PLATFORM_3 = "(device.platform IS NULL OR device.platform = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_TOKEN = new FinderPath(DeviceModelImpl.ENTITY_CACHE_ENABLED,
 			DeviceModelImpl.FINDER_CACHE_ENABLED, DeviceImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByToken",
@@ -1081,17 +1164,23 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 
 		else {
 			if ((deviceModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { deviceModelImpl.getOriginalUserId() };
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						deviceModelImpl.getOriginalUserId(),
+						deviceModelImpl.getOriginalPlatform()
+					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P,
 					args);
 
-				args = new Object[] { deviceModelImpl.getUserId() };
+				args = new Object[] {
+						deviceModelImpl.getUserId(),
+						deviceModelImpl.getPlatform()
+					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P,
 					args);
 			}
 		}
@@ -1118,6 +1207,7 @@ public class DevicePersistenceImpl extends BasePersistenceImpl<Device>
 		deviceImpl.setDeviceId(device.getDeviceId());
 		deviceImpl.setUserId(device.getUserId());
 		deviceImpl.setCreateDate(device.getCreateDate());
+		deviceImpl.setPlatform(device.getPlatform());
 		deviceImpl.setToken(device.getToken());
 
 		return deviceImpl;

@@ -64,7 +64,7 @@ public interface DeviceService extends BaseService, InvokableService {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public void addDevice(java.lang.String deviceId)
+	public void addDevice(java.lang.String token, java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

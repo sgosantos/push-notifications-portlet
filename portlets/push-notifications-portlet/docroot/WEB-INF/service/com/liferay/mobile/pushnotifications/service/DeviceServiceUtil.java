@@ -63,10 +63,11 @@ public class DeviceServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static void addDevice(java.lang.String deviceId)
+	public static void addDevice(java.lang.String token,
+		java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().addDevice(deviceId);
+		getService().addDevice(token, platform);
 	}
 
 	public static void deleteDevice(java.lang.String token)

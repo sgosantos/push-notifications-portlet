@@ -116,7 +116,9 @@ public class DeviceLocalServiceClpInvoker {
 
 		_methodName40 = "addDevice";
 
-		_methodParameterTypes40 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes40 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 
 		_methodName41 = "deleteDevice";
 
@@ -124,7 +126,7 @@ public class DeviceLocalServiceClpInvoker {
 
 		_methodName42 = "getUserDevices";
 
-		_methodParameterTypes42 = new String[] { "long" };
+		_methodParameterTypes42 = new String[] { "long", "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -231,7 +233,7 @@ public class DeviceLocalServiceClpInvoker {
 		if (_methodName40.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
 			DeviceLocalServiceUtil.addDevice(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 
 			return null;
 		}
@@ -246,7 +248,8 @@ public class DeviceLocalServiceClpInvoker {
 
 		if (_methodName42.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
-			return DeviceLocalServiceUtil.getUserDevices(((Long)arguments[0]).longValue());
+			return DeviceLocalServiceUtil.getUserDevices(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
 		}
 
 		throw new UnsupportedOperationException();

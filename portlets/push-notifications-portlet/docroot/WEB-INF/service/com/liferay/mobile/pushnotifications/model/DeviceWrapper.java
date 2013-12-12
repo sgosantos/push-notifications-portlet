@@ -52,6 +52,7 @@ public class DeviceWrapper implements Device, ModelWrapper<Device> {
 		attributes.put("deviceId", getDeviceId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("platform", getPlatform());
 		attributes.put("token", getToken());
 
 		return attributes;
@@ -75,6 +76,12 @@ public class DeviceWrapper implements Device, ModelWrapper<Device> {
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		String platform = (String)attributes.get("platform");
+
+		if (platform != null) {
+			setPlatform(platform);
 		}
 
 		String token = (String)attributes.get("token");
@@ -184,6 +191,26 @@ public class DeviceWrapper implements Device, ModelWrapper<Device> {
 	@Override
 	public void setCreateDate(java.util.Date createDate) {
 		_device.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the platform of this device.
+	*
+	* @return the platform of this device
+	*/
+	@Override
+	public java.lang.String getPlatform() {
+		return _device.getPlatform();
+	}
+
+	/**
+	* Sets the platform of this device.
+	*
+	* @param platform the platform of this device
+	*/
+	@Override
+	public void setPlatform(java.lang.String platform) {
+		_device.setPlatform(platform);
 	}
 
 	/**

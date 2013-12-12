@@ -249,7 +249,8 @@ public interface DeviceLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public void addDevice(long userId, java.lang.String token)
+	public void addDevice(long userId, java.lang.String token,
+		java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -259,5 +260,6 @@ public interface DeviceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> getUserDevices(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, java.lang.String platform)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -109,162 +109,178 @@ public class DeviceUtil {
 	}
 
 	/**
-	* Returns all the devices where userId = &#63;.
+	* Returns all the devices where userId = &#63; and platform = &#63;.
 	*
 	* @param userId the user ID
+	* @param platform the platform
 	* @return the matching devices
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUserId(userId);
+	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByU_P(
+		long userId, java.lang.String platform)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByU_P(userId, platform);
 	}
 
 	/**
-	* Returns a range of all the devices where userId = &#63;.
+	* Returns a range of all the devices where userId = &#63; and platform = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.mobile.pushnotifications.model.impl.DeviceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
+	* @param platform the platform
 	* @param start the lower bound of the range of devices
 	* @param end the upper bound of the range of devices (not inclusive)
 	* @return the range of matching devices
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUserId(
-		long userId, int start, int end)
+	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByU_P(
+		long userId, java.lang.String platform, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUserId(userId, start, end);
+		return getPersistence().findByU_P(userId, platform, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the devices where userId = &#63;.
+	* Returns an ordered range of all the devices where userId = &#63; and platform = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.mobile.pushnotifications.model.impl.DeviceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
+	* @param platform the platform
 	* @param start the lower bound of the range of devices
 	* @param end the upper bound of the range of devices (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching devices
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByUserId(
-		long userId, int start, int end,
+	public static java.util.List<com.liferay.mobile.pushnotifications.model.Device> findByU_P(
+		long userId, java.lang.String platform, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByUserId(userId, start, end, orderByComparator);
+				   .findByU_P(userId, platform, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the first device in the ordered set where userId = &#63;.
+	* Returns the first device in the ordered set where userId = &#63; and platform = &#63;.
 	*
 	* @param userId the user ID
+	* @param platform the platform
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching device
 	* @throws com.liferay.mobile.pushnotifications.NoSuchDeviceException if a matching device could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.mobile.pushnotifications.model.Device findByUserId_First(
-		long userId,
+	public static com.liferay.mobile.pushnotifications.model.Device findByU_P_First(
+		long userId, java.lang.String platform,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUserId_First(userId, orderByComparator);
+		return getPersistence()
+				   .findByU_P_First(userId, platform, orderByComparator);
 	}
 
 	/**
-	* Returns the first device in the ordered set where userId = &#63;.
+	* Returns the first device in the ordered set where userId = &#63; and platform = &#63;.
 	*
 	* @param userId the user ID
+	* @param platform the platform
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching device, or <code>null</code> if a matching device could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.mobile.pushnotifications.model.Device fetchByUserId_First(
-		long userId,
+	public static com.liferay.mobile.pushnotifications.model.Device fetchByU_P_First(
+		long userId, java.lang.String platform,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+		return getPersistence()
+				   .fetchByU_P_First(userId, platform, orderByComparator);
 	}
 
 	/**
-	* Returns the last device in the ordered set where userId = &#63;.
+	* Returns the last device in the ordered set where userId = &#63; and platform = &#63;.
 	*
 	* @param userId the user ID
+	* @param platform the platform
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching device
 	* @throws com.liferay.mobile.pushnotifications.NoSuchDeviceException if a matching device could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.mobile.pushnotifications.model.Device findByUserId_Last(
-		long userId,
+	public static com.liferay.mobile.pushnotifications.model.Device findByU_P_Last(
+		long userId, java.lang.String platform,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
+		return getPersistence()
+				   .findByU_P_Last(userId, platform, orderByComparator);
 	}
 
 	/**
-	* Returns the last device in the ordered set where userId = &#63;.
+	* Returns the last device in the ordered set where userId = &#63; and platform = &#63;.
 	*
 	* @param userId the user ID
+	* @param platform the platform
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching device, or <code>null</code> if a matching device could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.mobile.pushnotifications.model.Device fetchByUserId_Last(
-		long userId,
+	public static com.liferay.mobile.pushnotifications.model.Device fetchByU_P_Last(
+		long userId, java.lang.String platform,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+		return getPersistence()
+				   .fetchByU_P_Last(userId, platform, orderByComparator);
 	}
 
 	/**
-	* Returns the devices before and after the current device in the ordered set where userId = &#63;.
+	* Returns the devices before and after the current device in the ordered set where userId = &#63; and platform = &#63;.
 	*
 	* @param deviceId the primary key of the current device
 	* @param userId the user ID
+	* @param platform the platform
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next device
 	* @throws com.liferay.mobile.pushnotifications.NoSuchDeviceException if a device with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.mobile.pushnotifications.model.Device[] findByUserId_PrevAndNext(
-		long deviceId, long userId,
+	public static com.liferay.mobile.pushnotifications.model.Device[] findByU_P_PrevAndNext(
+		long deviceId, long userId, java.lang.String platform,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.mobile.pushnotifications.NoSuchDeviceException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByUserId_PrevAndNext(deviceId, userId, orderByComparator);
+				   .findByU_P_PrevAndNext(deviceId, userId, platform,
+			orderByComparator);
 	}
 
 	/**
-	* Removes all the devices where userId = &#63; from the database.
+	* Removes all the devices where userId = &#63; and platform = &#63; from the database.
 	*
 	* @param userId the user ID
+	* @param platform the platform
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUserId(long userId)
+	public static void removeByU_P(long userId, java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUserId(userId);
+		getPersistence().removeByU_P(userId, platform);
 	}
 
 	/**
-	* Returns the number of devices where userId = &#63;.
+	* Returns the number of devices where userId = &#63; and platform = &#63;.
 	*
 	* @param userId the user ID
+	* @param platform the platform
 	* @return the number of matching devices
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUserId(long userId)
+	public static int countByU_P(long userId, java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUserId(userId);
+		return getPersistence().countByU_P(userId, platform);
 	}
 
 	/**

@@ -77,6 +77,7 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 		attributes.put("deviceId", getDeviceId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("platform", getPlatform());
 		attributes.put("token", getToken());
 
 		return attributes;
@@ -100,6 +101,12 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		String platform = (String)attributes.get("platform");
+
+		if (platform != null) {
+			setPlatform(platform);
 		}
 
 		String token = (String)attributes.get("token");
@@ -181,6 +188,29 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 				Method method = clazz.getMethod("setCreateDate", Date.class);
 
 				method.invoke(_deviceRemoteModel, createDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getPlatform() {
+		return _platform;
+	}
+
+	@Override
+	public void setPlatform(String platform) {
+		_platform = platform;
+
+		if (_deviceRemoteModel != null) {
+			try {
+				Class<?> clazz = _deviceRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setPlatform", String.class);
+
+				method.invoke(_deviceRemoteModel, platform);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -283,6 +313,7 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 		clone.setDeviceId(getDeviceId());
 		clone.setUserId(getUserId());
 		clone.setCreateDate(getCreateDate());
+		clone.setPlatform(getPlatform());
 		clone.setToken(getToken());
 
 		return clone;
@@ -332,7 +363,7 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{deviceId=");
 		sb.append(getDeviceId());
@@ -340,6 +371,8 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 		sb.append(getUserId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
+		sb.append(", platform=");
+		sb.append(getPlatform());
 		sb.append(", token=");
 		sb.append(getToken());
 		sb.append("}");
@@ -349,7 +382,7 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.mobile.pushnotifications.model.Device");
@@ -368,6 +401,10 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>platform</column-name><column-value><![CDATA[");
+		sb.append(getPlatform());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>token</column-name><column-value><![CDATA[");
 		sb.append(getToken());
 		sb.append("]]></column-value></column>");
@@ -381,6 +418,7 @@ public class DeviceClp extends BaseModelImpl<Device> implements Device {
 	private long _userId;
 	private String _userUuid;
 	private Date _createDate;
+	private String _platform;
 	private String _token;
 	private BaseModel<?> _deviceRemoteModel;
 }

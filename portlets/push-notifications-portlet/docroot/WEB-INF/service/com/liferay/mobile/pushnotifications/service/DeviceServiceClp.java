@@ -34,7 +34,9 @@ public class DeviceServiceClp implements DeviceService {
 
 		_methodName3 = "addDevice";
 
-		_methodParameterTypes3 = new String[] { "java.lang.String" };
+		_methodParameterTypes3 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
 
 		_methodName4 = "deleteDevice";
 
@@ -92,13 +94,17 @@ public class DeviceServiceClp implements DeviceService {
 	}
 
 	@Override
-	public void addDevice(java.lang.String deviceId)
+	public void addDevice(java.lang.String token, java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableService.invokeMethod(_methodName3,
 				_methodParameterTypes3,
-				new Object[] { ClpSerializer.translateInput(deviceId) });
+				new Object[] {
+					ClpSerializer.translateInput(token),
+					
+				ClpSerializer.translateInput(platform)
+				});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

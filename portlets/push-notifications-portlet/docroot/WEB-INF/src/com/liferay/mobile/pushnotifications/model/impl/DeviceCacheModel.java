@@ -37,7 +37,7 @@ import java.util.Date;
 public class DeviceCacheModel implements CacheModel<Device>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{deviceId=");
 		sb.append(deviceId);
@@ -45,6 +45,8 @@ public class DeviceCacheModel implements CacheModel<Device>, Externalizable {
 		sb.append(userId);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", platform=");
+		sb.append(platform);
 		sb.append(", token=");
 		sb.append(token);
 		sb.append("}");
@@ -66,6 +68,13 @@ public class DeviceCacheModel implements CacheModel<Device>, Externalizable {
 			deviceImpl.setCreateDate(new Date(createDate));
 		}
 
+		if (platform == null) {
+			deviceImpl.setPlatform(StringPool.BLANK);
+		}
+		else {
+			deviceImpl.setPlatform(platform);
+		}
+
 		if (token == null) {
 			deviceImpl.setToken(StringPool.BLANK);
 		}
@@ -83,6 +92,7 @@ public class DeviceCacheModel implements CacheModel<Device>, Externalizable {
 		deviceId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
+		platform = objectInput.readUTF();
 		token = objectInput.readUTF();
 	}
 
@@ -92,6 +102,13 @@ public class DeviceCacheModel implements CacheModel<Device>, Externalizable {
 		objectOutput.writeLong(deviceId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
+
+		if (platform == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(platform);
+		}
 
 		if (token == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -104,5 +121,6 @@ public class DeviceCacheModel implements CacheModel<Device>, Externalizable {
 	public long deviceId;
 	public long userId;
 	public long createDate;
+	public String platform;
 	public String token;
 }

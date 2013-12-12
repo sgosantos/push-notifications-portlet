@@ -62,10 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class DeviceServiceSoap {
-	public static void addDevice(java.lang.String deviceId)
-		throws RemoteException {
+	public static void addDevice(java.lang.String token,
+		java.lang.String platform) throws RemoteException {
 		try {
-			DeviceServiceUtil.addDevice(deviceId);
+			DeviceServiceUtil.addDevice(token, platform);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

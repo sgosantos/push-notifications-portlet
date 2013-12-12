@@ -14,6 +14,7 @@
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="platform" />
 			<basic name="token" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />

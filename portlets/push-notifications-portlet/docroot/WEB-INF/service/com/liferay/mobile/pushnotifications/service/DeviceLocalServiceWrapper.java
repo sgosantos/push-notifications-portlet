@@ -285,10 +285,11 @@ public class DeviceLocalServiceWrapper implements DeviceLocalService,
 	}
 
 	@Override
-	public void addDevice(long userId, java.lang.String token)
+	public void addDevice(long userId, java.lang.String token,
+		java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_deviceLocalService.addDevice(userId, token);
+		_deviceLocalService.addDevice(userId, token, platform);
 	}
 
 	@Override
@@ -300,8 +301,9 @@ public class DeviceLocalServiceWrapper implements DeviceLocalService,
 
 	@Override
 	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> getUserDevices(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
-		return _deviceLocalService.getUserDevices(userId);
+		long userId, java.lang.String platform)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _deviceLocalService.getUserDevices(userId, platform);
 	}
 
 	/**

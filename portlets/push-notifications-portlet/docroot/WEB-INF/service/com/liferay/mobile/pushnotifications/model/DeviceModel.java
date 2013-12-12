@@ -118,6 +118,21 @@ public interface DeviceModel extends BaseModel<Device> {
 	public void setCreateDate(Date createDate);
 
 	/**
+	 * Returns the platform of this device.
+	 *
+	 * @return the platform of this device
+	 */
+	@AutoEscape
+	public String getPlatform();
+
+	/**
+	 * Sets the platform of this device.
+	 *
+	 * @param platform the platform of this device
+	 */
+	public void setPlatform(String platform);
+
+	/**
 	 * Returns the token of this device.
 	 *
 	 * @return the token of this device

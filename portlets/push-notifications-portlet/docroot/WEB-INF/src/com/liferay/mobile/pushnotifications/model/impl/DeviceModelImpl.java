@@ -69,9 +69,10 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 			{ "deviceId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
+			{ "platform", Types.VARCHAR },
 			{ "token", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PushNotifications_Device (deviceId LONG not null primary key,userId LONG,createDate DATE null,token VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table PushNotifications_Device (deviceId LONG not null primary key,userId LONG,createDate DATE null,platform VARCHAR(75) null,token VARCHAR(250) null)";
 	public static final String TABLE_SQL_DROP = "drop table PushNotifications_Device";
 	public static final String ORDER_BY_JPQL = " ORDER BY device.deviceId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PushNotifications_Device.deviceId ASC";
@@ -87,9 +88,10 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.mobile.pushnotifications.model.Device"),
 			true);
-	public static long TOKEN_COLUMN_BITMASK = 1L;
-	public static long USERID_COLUMN_BITMASK = 2L;
-	public static long DEVICEID_COLUMN_BITMASK = 4L;
+	public static long PLATFORM_COLUMN_BITMASK = 1L;
+	public static long TOKEN_COLUMN_BITMASK = 2L;
+	public static long USERID_COLUMN_BITMASK = 4L;
+	public static long DEVICEID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -107,6 +109,7 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 		model.setDeviceId(soapModel.getDeviceId());
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
+		model.setPlatform(soapModel.getPlatform());
 		model.setToken(soapModel.getToken());
 
 		return model;
@@ -175,6 +178,7 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 		attributes.put("deviceId", getDeviceId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("platform", getPlatform());
 		attributes.put("token", getToken());
 
 		return attributes;
@@ -198,6 +202,12 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		String platform = (String)attributes.get("platform");
+
+		if (platform != null) {
+			setPlatform(platform);
 		}
 
 		String token = (String)attributes.get("token");
@@ -264,6 +274,32 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 	@JSON
 	@Override
+	public String getPlatform() {
+		if (_platform == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _platform;
+		}
+	}
+
+	@Override
+	public void setPlatform(String platform) {
+		_columnBitmask |= PLATFORM_COLUMN_BITMASK;
+
+		if (_originalPlatform == null) {
+			_originalPlatform = _platform;
+		}
+
+		_platform = platform;
+	}
+
+	public String getOriginalPlatform() {
+		return GetterUtil.getString(_originalPlatform);
+	}
+
+	@JSON
+	@Override
 	public String getToken() {
 		if (_token == null) {
 			return StringPool.BLANK;
@@ -322,6 +358,7 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 		deviceImpl.setDeviceId(getDeviceId());
 		deviceImpl.setUserId(getUserId());
 		deviceImpl.setCreateDate(getCreateDate());
+		deviceImpl.setPlatform(getPlatform());
 		deviceImpl.setToken(getToken());
 
 		deviceImpl.resetOriginalValues();
@@ -379,6 +416,8 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 		deviceModelImpl._setOriginalUserId = false;
 
+		deviceModelImpl._originalPlatform = deviceModelImpl._platform;
+
 		deviceModelImpl._originalToken = deviceModelImpl._token;
 
 		deviceModelImpl._columnBitmask = 0;
@@ -401,6 +440,14 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 			deviceCacheModel.createDate = Long.MIN_VALUE;
 		}
 
+		deviceCacheModel.platform = getPlatform();
+
+		String platform = deviceCacheModel.platform;
+
+		if ((platform != null) && (platform.length() == 0)) {
+			deviceCacheModel.platform = null;
+		}
+
 		deviceCacheModel.token = getToken();
 
 		String token = deviceCacheModel.token;
@@ -414,7 +461,7 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{deviceId=");
 		sb.append(getDeviceId());
@@ -422,6 +469,8 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 		sb.append(getUserId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
+		sb.append(", platform=");
+		sb.append(getPlatform());
 		sb.append(", token=");
 		sb.append(getToken());
 		sb.append("}");
@@ -431,7 +480,7 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.mobile.pushnotifications.model.Device");
@@ -448,6 +497,10 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>platform</column-name><column-value><![CDATA[");
+		sb.append(getPlatform());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>token</column-name><column-value><![CDATA[");
@@ -467,6 +520,8 @@ public class DeviceModelImpl extends BaseModelImpl<Device>
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private Date _createDate;
+	private String _platform;
+	private String _originalPlatform;
 	private String _token;
 	private String _originalToken;
 	private long _columnBitmask;

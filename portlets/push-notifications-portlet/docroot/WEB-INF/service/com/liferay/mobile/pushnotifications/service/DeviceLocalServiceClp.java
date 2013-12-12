@@ -116,7 +116,9 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 
 		_methodName19 = "addDevice";
 
-		_methodParameterTypes19 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes19 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 
 		_methodName20 = "deleteDevice";
 
@@ -124,7 +126,7 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 
 		_methodName21 = "getUserDevices";
 
-		_methodParameterTypes21 = new String[] { "long" };
+		_methodParameterTypes21 = new String[] { "long", "java.lang.String" };
 	}
 
 	@Override
@@ -678,13 +680,20 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 	}
 
 	@Override
-	public void addDevice(long userId, java.lang.String token)
+	public void addDevice(long userId, java.lang.String token,
+		java.lang.String platform)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName19,
 				_methodParameterTypes19,
-				new Object[] { userId, ClpSerializer.translateInput(token) });
+				new Object[] {
+					userId,
+					
+				ClpSerializer.translateInput(token),
+					
+				ClpSerializer.translateInput(platform)
+				});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -739,12 +748,15 @@ public class DeviceLocalServiceClp implements DeviceLocalService {
 
 	@Override
 	public java.util.List<com.liferay.mobile.pushnotifications.model.Device> getUserDevices(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, java.lang.String platform)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { userId });
+					_methodParameterTypes21,
+					new Object[] { userId, ClpSerializer.translateInput(
+							platform) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

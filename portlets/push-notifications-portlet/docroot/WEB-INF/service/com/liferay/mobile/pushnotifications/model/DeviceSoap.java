@@ -34,6 +34,7 @@ public class DeviceSoap implements Serializable {
 		soapModel.setDeviceId(model.getDeviceId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setPlatform(model.getPlatform());
 		soapModel.setToken(model.getToken());
 
 		return soapModel;
@@ -111,6 +112,14 @@ public class DeviceSoap implements Serializable {
 		_createDate = createDate;
 	}
 
+	public String getPlatform() {
+		return _platform;
+	}
+
+	public void setPlatform(String platform) {
+		_platform = platform;
+	}
+
 	public String getToken() {
 		return _token;
 	}
@@ -122,5 +131,6 @@ public class DeviceSoap implements Serializable {
 	private long _deviceId;
 	private long _userId;
 	private Date _createDate;
+	private String _platform;
 	private String _token;
 }
