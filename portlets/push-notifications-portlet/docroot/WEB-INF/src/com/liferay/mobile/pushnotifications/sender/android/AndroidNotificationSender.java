@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.pushnotifications.android;
+package com.liferay.mobile.pushnotifications.sender.android;
 
 import com.google.android.gcm.server.Constants;
 import com.google.android.gcm.server.Message;
