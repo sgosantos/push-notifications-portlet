@@ -14,6 +14,7 @@
 
 		<column name="userId" type="long" />
 		<column name="createDate" type="Date" />
+		<column name="platform" type="String" />
 
 		<!-- Other fields -->
 
@@ -21,8 +22,9 @@
 
 		<!-- Finder methods -->
 
-		<finder name="UserId" return-type="Collection">
+		<finder name="U_P" return-type="Collection">
 			<finder-column name="userId" />
+			<finder-column name="platform" />
 		</finder>
 		<finder name="Token" return-type="Device" unique="true">
 			<finder-column name="token" />

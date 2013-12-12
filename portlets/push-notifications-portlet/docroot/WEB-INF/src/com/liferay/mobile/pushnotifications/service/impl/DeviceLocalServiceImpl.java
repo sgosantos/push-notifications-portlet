@@ -30,18 +30,30 @@ import java.util.List;
 public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 
 	@Override
-	public void addDevice(long userId, String token)
+	public void addDevice(long userId, String token, String platform)
 		throws PortalException, SystemException {
 
-		long deviceId = counterLocalService.increment();
+		Device device = null;
 
-		Device device = devicePersistence.create(deviceId);
+		try {
+			device = devicePersistence.findByToken(token);
+		}
+		catch (NoSuchDeviceException nsde) {
+		}
+
+		if (device == null) {
+			long deviceId = counterLocalService.increment();
+
+			device = devicePersistence.create(deviceId);
+
+			device.setToken(token);
+		}
 
 		device.setUserId(userId);
-		device.setToken(token);
+		device.setPlatform(platform);
 		device.setCreateDate(new Date());
 
-		deviceLocalService.addDevice(device);
+		deviceLocalService.updateDevice(device);
 	}
 
 	@Override
@@ -56,8 +68,10 @@ public class DeviceLocalServiceImpl extends DeviceLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Device> getUserDevices(long userId) throws SystemException {
-		return devicePersistence.findByUserId(userId);
+	public List<Device> getUserDevices(long userId, String platform)
+		throws SystemException {
+
+		return devicePersistence.findByU_P(userId, platform);
 	}
 
 }

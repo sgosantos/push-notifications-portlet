@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 public class DeviceServiceImpl extends DeviceServiceBaseImpl {
 
 	@Override
-	public void addDevice(String deviceId)
+	public void addDevice(String token, String platform)
 		throws PortalException, SystemException {
 
-		deviceLocalService.addDevice(getUserId(), deviceId);
+		deviceLocalService.addDevice(getUserId(), token, platform);
 	}
 
 	@Override

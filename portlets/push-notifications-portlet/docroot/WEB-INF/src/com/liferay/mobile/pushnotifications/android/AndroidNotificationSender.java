@@ -44,7 +44,8 @@ public class AndroidNotificationSender {
 			boolean delayWhileIdle)
 		throws IOException, SystemException {
 
-		List<Device> devices = DeviceLocalServiceUtil.getUserDevices(userId);
+		List<Device> devices = DeviceLocalServiceUtil.getUserDevices(
+			userId, PLATFORM);
 
 		if (devices.isEmpty()) {
 			return;
@@ -144,6 +145,8 @@ public class AndroidNotificationSender {
 	}
 
 	protected static final int MAX_TIME_TO_LIVE = 2419200;
+
+	protected static final String PLATFORM = "android";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		AndroidNotificationSender.class);
