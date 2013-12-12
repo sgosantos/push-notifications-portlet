@@ -16,9 +16,16 @@ package com.liferay.mobile.pushnotifications.util;
 
 /**
  * @author Bruno Farache
+ * @author Silvio Santos
  */
 public class PortletPropsKeys {
 
 	public static final String ANDROID_API_KEY = "android.api.key";
+
+	public static final String IOS_CERT_PASSWORD = "ios.cert.password";
+
+	public static final String IOS_CERT_PATH = "ios.cert.path";
+
+	public static final String IOS_SANDBOX = "ios.sandbox";
 
 }

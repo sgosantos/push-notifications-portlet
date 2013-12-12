@@ -18,10 +18,20 @@ import com.liferay.util.portlet.PortletProps;
 
 /**
  * @author Bruno Farache
+ * @author Silvio Santos
  */
 public class PortletPropsValues {
 
 	public static final String ANDROID_API_KEY = PortletProps.get(
 		PortletPropsKeys.ANDROID_API_KEY);
+
+	public static final String IOS_CERT_PASSWORD = PortletProps.get(
+		PortletPropsKeys.IOS_CERT_PASSWORD);
+
+	public static final String IOS_CERT_PATH = PortletProps.get(
+		PortletPropsKeys.IOS_CERT_PATH);
+
+	public static final String IOS_SANDBOX = PortletProps.get(
+		PortletPropsKeys.IOS_SANDBOX);
 
 }
