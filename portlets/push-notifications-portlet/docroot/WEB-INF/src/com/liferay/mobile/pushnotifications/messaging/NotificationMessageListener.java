@@ -14,7 +14,8 @@
 
 package com.liferay.mobile.pushnotifications.messaging;
 
-import com.liferay.mobile.pushnotifications.android.AndroidNotificationSender;
+import com.liferay.mobile.pushnotifications.sender.android.AndroidNotificationSender;
+import com.liferay.mobile.pushnotifications.sender.ios.iOSNotificationSender;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -29,15 +30,20 @@ public class NotificationMessageListener implements MessageListener {
 
 	public void receive(Message message) {
 		List<Long> userIds = (List<Long>)message.get("userIds");
+		String alert = message.getString("alert");
 		String collapseKey = message.getString("collapseKey");
 		String data = message.getString("data");
 		int timeToLive = message.getInteger("timeToLive");
 		boolean delayWhileIdle = message.getBoolean("delayWhileIdle");
+		int badge = message.getInteger("badge");
+		String sound = message.getString("sound");
 
 		for (long userId : userIds) {
 			try {
 				AndroidNotificationSender.send(
 					userId, collapseKey, data, timeToLive, delayWhileIdle);
+
+				iOSNotificationSender.send(userId, alert, data, badge, sound);
 			}
 			catch (Exception e) {
 				_log.error(e);
